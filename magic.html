@@ -25,7 +25,7 @@ main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{d
 <div class="rangehead"><label for="space">Пространство / эхо</label><output id="spaceO">35%</output></div><input id="space" type="range" min="0" max="100" value="35">
 <div class="rangehead"><label for="volume">Громкость</label><output id="volumeO">65%</output></div><input id="volume" type="range" min="0" max="100" value="65">
 <div class="divider"></div><div class="actions"><button class="btn primary" id="play">▶ Слушать эскиз</button><button class="btn" id="stop">■ Стоп</button><button class="btn gold" id="wav">↓ Скачать WAV</button></div>
-<div class="status" id="synthStatus">Многослойный синтез прямо в браузере — бесплатно, без регистрации.</div>
+<div class="status" id="synthStatus">Бесплатный браузерный синтез: громче, мягче и с более объёмным фоном.</div>
 <div class="note"><b>Честно о звучании:</b> это генеративный синтез для сравнения ритма, лада, плотности и атмосферы — не настоящая запись живых инструментов. WAV можно использовать как черновой материал.</div></div>
 <div class="panel"><h2>Ⅲ. Сохранённые формулы</h2><p class="sub">Сохраняются только в этом браузере на этом устройстве.</p><div class="actions"><button class="btn" id="save">✦ Сохранить смесь</button><button class="btn small" id="clear">Очистить</button></div><div id="saved" class="savedlist"></div></div>
 </section><section>
@@ -104,16 +104,16 @@ $('add').onclick=()=>{addGenres($('genreInput').value);$('genreInput').value=''}
 function ensure(){
  if(!ctx){
   ctx=new(window.AudioContext||window.webkitAudioContext)();
-  master=ctx.createGain(); master.gain.value=+$('volume').value/100*.26;
+  master=ctx.createGain(); master.gain.value=+$('volume').value/100*.34;
   const dry=ctx.createGain(); dry.gain.value=.82;
-  delay=ctx.createDelay(1); delay.delayTime.value=.29;
-  feedback=ctx.createGain(); feedback.gain.value=.12;
-  const wet=ctx.createGain(); wet.gain.value=+$('space').value/100*.32;
+  delay=ctx.createDelay(1); delay.delayTime.value=.36;
+  feedback=ctx.createGain(); feedback.gain.value=.16;
+  const wet=ctx.createGain(); wet.gain.value=+$('space').value/100*.38;
   master.connect(dry); dry.connect(ctx.destination);
   master.connect(delay); delay.connect(feedback); feedback.connect(delay); delay.connect(wet); wet.connect(ctx.destination);
  }
- master.gain.setTargetAtTime(+$('volume').value/100*.26,ctx.currentTime,.04);
- feedback.gain.setTargetAtTime(+$('space').value/100*.18,ctx.currentTime,.08);
+ master.gain.setTargetAtTime(+$('volume').value/100*.34,ctx.currentTime,.04);
+ feedback.gain.setTargetAtTime(+$('space').value/100*.20,ctx.currentTime,.08);
 }
 function osc(freq,start,dur,wave,amp=0.1,opts={}){
  const o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter(),pan=ctx.createStereoPanner();
@@ -123,8 +123,10 @@ function osc(freq,start,dur,wave,amp=0.1,opts={}){
  pan.pan.value=opts.pan||0;
  const peak=Math.max(.0002,amp);
  g.gain.setValueAtTime(.0001,start);
- g.gain.linearRampToValueAtTime(peak,start+Math.min(.12,dur*.3));
- g.gain.setValueAtTime(peak*.72,Math.max(start+.02,start+dur*.65));
+ g.gain.linearRampToValueAtTime(peak,start+Math.min(opts.attack||.12,dur*.42));
+ // Soft natural swell and release: less abrupt, less "beep-like".
+ g.gain.setValueAtTime(peak*.82,Math.max(start+.03,start+dur*.38));
+ g.gain.linearRampToValueAtTime(peak*.58,Math.max(start+.04,start+dur*.78));
  g.gain.exponentialRampToValueAtTime(.0001,start+dur);
  o.connect(f); f.connect(g); g.connect(pan); pan.connect(master);
  o.start(start); o.stop(start+dur+.04); nodes.push(o);
@@ -158,7 +160,7 @@ function schedule(){
    const chord=[root,scale[(scale.indexOf(root)+2)%scale.length]??7,scale[(scale.indexOf(root)+4)%scale.length]??10];
    chord.forEach((semi,j)=>{
     const f=110*Math.pow(2/(1),semi/12);
-    osc(f,barStart,Math.min(3.7*beat,beat*3.6),ambient?'sine':(heavy?'sawtooth':'triangle'),(ambient?.035:.022)*int,{cutoff:ambient?900:1500,detune:j===1?3:-2,pan:(j-1)*.35});
+    osc(f,barStart,Math.min(3.7*beat,beat*3.6),ambient?'sine':(heavy?'sawtooth':'triangle'),(ambient?.045:.03)*int,{cutoff:ambient?1100:1900,detune:j===1?4:-3,pan:(j-1)*.42,attack:Math.min(.55,beat*.9)});
     osc(f*2,barStart+.015,Math.min(3.4*beat,beat*3.3),'sine',.008*int,{cutoff:2200,pan:(1-j)*.25});
    });
   }
@@ -183,14 +185,14 @@ function schedule(){
  }
  timer=setTimeout(schedule,beat*8000);
 }
-async function play(){if(playing){stop()}ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent='Играет многослойный синтез. Это электронная имитация, не запись реальных инструментов.';schedule();}
+async function play(){if(playing){stop()}ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent='Играет более громкий многослойный синтез. Это всё ещё электронная имитация, не запись живых инструментов.';schedule();}
 function stop(){playing=false;clearTimeout(timer);nodes.forEach(n=>{try{n.stop()}catch(e){}});nodes=[];$('art').classList.remove('playing');}
 $('play').onclick=play;$('stop').onclick=()=>{stop();$('synthStatus').textContent='Остановлено.'};$('rune').textContent='✧';
 $('bars').innerHTML=Array.from({length:31},()=>'<i></i>').join('');
 async function renderWav(){
  stop();$('synthStatus').textContent='Создаю более многослойный WAV…';
  const sr=24000,seconds=16,frames=sr*seconds,off=new OfflineAudioContext(2,frames,sr);
- const master=off.createGain();master.gain.value=+$('volume').value/100*.24;
+ const master=off.createGain();master.gain.value=+$('volume').value/100*.30;
  const comp=off.createDynamicsCompressor();comp.threshold.value=-18;comp.knee.value=14;comp.ratio.value=3;comp.attack.value=.012;comp.release.value=.22;
  const delay=off.createDelay(.8);delay.delayTime.value=.28;const fb=off.createGain();fb.gain.value=.12;
  const wet=off.createGain();wet.gain.value=+$('space').value/100*.24;
