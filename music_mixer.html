@@ -29,9 +29,9 @@
     </div>
 
     <div class="monitor-panel">
-        <div class="monitor-line"><span>Форма звуковой волны:</span> <span id="monWave" class="monitor-val">-</span></div>
+        <div class="monitor-line"><span>Характер звука:</span> <span id="monWave" class="monitor-val">-</span></div>
         <div class="monitor-line"><span>Темп скорости (BPM):</span> <span id="monBpm" class="monitor-val">-</span></div>
-        <div class="monitor-line"><span>Эффект искажения:</span> <span id="monDist" class="monitor-val">-</span></div>
+        <div class="monitor-line"><span>Объемное эхо (Реверб):</span> <span id="monEcho" class="monitor-val">Включено (Глубокое)</span></div>
     </div>
 </div>
 
@@ -45,6 +45,10 @@
     var inputEl = document.getElementById('genreInput');
     var btnEl = document.getElementById('playBtn');
 
+    // Элементы для эхо (главный секрет живого звука)
+    var delayNode = null;
+    var delayGain = null;
+
     function parseText() {
         var text = inputEl.value.toLowerCase().trim();
         if (!text) return;
@@ -54,15 +58,15 @@
             code += text.charCodeAt(i);
         }
 
-        var waves = ['sine', 'triangle', 'sawtooth', 'square'];
+        // Подбираем формы волн, которые звучат мягче
+        var waves = ['sine', 'triangle', 'sine', 'triangle']; 
         settings.wave = waves[code % 4];
-        settings.bpm = 85 + (code % 100);
-        settings.dist = (code % 3 === 0) ? (code % 200) + 50 : 0;
+        settings.bpm = 80 + (code % 80); // Комфортный темп от 80 до 160 BPM
+        settings.dist = (code % 4 === 0) ? (code % 80) + 10 : 0; // Смягчили перегруз
 
-        var waveNames = { 'sine': 'Синусоида (Мягкая)', 'triangle': 'Треугольная (Инди/Фолк)', 'sawtooth': 'Пила (Электро/Синт)', 'square': 'Квадрат (Ретро/8-Bit)' };
-        document.getElementById('monWave').textContent = waveNames[settings.wave];
+        var waveNames = { 'sine': 'Объемный аналоговый синт', 'triangle': 'Теплая флейта / Фолк' };
+        document.getElementById('monWave').textContent = waveNames[settings.wave] || 'Акустический синт';
         document.getElementById('monBpm').textContent = settings.bpm + ' BPM';
-        document.getElementById('monDist').textContent = settings.dist > 0 ? 'Включен' : 'Выключен';
 
         if (isPlaying) {
             clearInterval(timerId);
@@ -75,6 +79,20 @@
     btnEl.addEventListener('click', function() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Создаем узел ЭХО (задержки звука), чтобы убрать «роботизированность»
+            delayNode = audioCtx.createDelay();
+            delayGain = audioCtx.createGain();
+            
+            delayNode.delayTime.value = 0.35; // Время задержки в секундах
+            delayGain.gain.value = 0.4;       // Громкость хвоста эхо (40%)
+
+            // Зацикливаем эхо само на себя для плавности купола
+            delayNode.connect(delayGain);
+            delayGain.connect(delayNode);
+            
+            // Подключаем к главному выходу
+            delayGain.connect(audioCtx.destination);
         }
 
         if (isPlaying) {
@@ -93,19 +111,30 @@
 
     function playStep() {
         if (!audioCtx || !isPlaying) return;
-        var notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+        
+        // Красивое гармоничное созвучие (не пищащее)
+        var notes = [196.00, 220.00, 261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
         var freq = notes[noteIndex % notes.length];
+        
+        // Делаем легкое покачивание нот для живого эффекта
+        if (noteIndex % 3 === 0) freq = freq * 0.75; 
         noteIndex++;
 
         var osc = audioCtx.createOscillator();
         var gain = audioCtx.createGain();
+        
+        // Подключаем инструмент напрямую к динамикам И в узел ЭХО одновременно
         osc.connect(gain);
         gain.connect(audioCtx.destination);
+        gain.connect(delayNode); 
 
         osc.type = settings.wave;
         osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+        
+        // Мягкая атака звука (звук нарастает плавно, а не бьет по ушам щелчком)
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.07, audioCtx.currentTime + 0.05); // Плавный старт ноты
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4); // Долгое затухание
 
         if (settings.dist > 0) {
             var distNode = audioCtx.createWaveShaper();
@@ -116,14 +145,14 @@
         }
 
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.25);
+        osc.stop(audioCtx.currentTime + 0.4);
     }
 
     function makeDistCurve(amount) {
         var k = amount, n = 44100, curve = new Float32Array(n), deg = Math.PI / 180, i = 0, x;
         for ( ; i < n; ++i ) {
             x = (i * 2) / n - 1;
-            curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+            curve[i] = ((3 + k) * x * 8 * deg) / (Math.PI + k * Math.abs(x));
         }
         return curve;
     }
