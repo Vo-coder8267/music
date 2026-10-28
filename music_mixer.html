@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Универсальный Музыкальный Конструктор</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0c10;
+            color: #c5c6c7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #1f2833;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            width: 600px;
+            border: 2px solid #45f3ff;
+        }
+        h1 { font-size: 24px; margin-bottom: 5px; color: #45f3ff; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .subtitle { color: #66fcf1; font-size: 13px; margin-bottom: 25px; text-align: center; }
+        
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            background: #0b0c10;
+            border: 2px solid #45f3ff;
+            padding: 14px 20px;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        button {
+            background: #45f3ff;
+            color: #0b0c10;
+            border: none;
+            padding: 0 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        button:hover { background: #66fcf1; transform: scale(1.02); }
+        button.playing { background: #ff4a4a; color: #fff; }
+
+        .monitor-panel {
+            background: #0b0c10;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #66fcf1;
+            border: 1px solid #1f2833;
+        }
+        .monitor-line { margin: 4px 0; display: flex; justify-content: space-between; }
+        .monitor-val { color: #fff; font-weight: bold; }
+
+        .visualizer {
+            height: 60px;
+            background: #0b0c10;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px;
+        }
+        .bar {
+            width: 6px;
+            height: 6px;
+            background: #45f3ff;
+            border-radius: 3px 3px 0 0;
+            transition: height 0.05s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Музыкальный Конструктор Жанров</h1>
+    <div class="subtitle">Вписывайте любые свои жанры, стили или поджанры через запятую (на русском или английском)</div>
+    
+    <div class="input-group">
+        <input type="text" id="genreInput" placeholder="Например: Synthwave, Поп, Dark Ambient...">
+        <button id="playBtn">PLAY</button>
+    </div>
+
+    <div class="monitor-panel">
+        <div class="monitor-line"><span>Форма звуковой волны:</span> <span id="monWave" class="monitor-val">-</span></div>
+        <div class="monitor-line"><span>Темп скорости (BPM):</span> <span id="monBpm" class="monitor-val">-</span></div>
+        <div class="monitor-line"><span>Характер ритма:</span> <span id="monDrum" class="monitor-val">-</span></div>
+        <div class="monitor-line"><span>Эффект искажения:</span> <span id="monDist" class="monitor-val">-</span></div>
+        <div class="monitor-line"><span>Высота тональности:</span> <span id="monOctave" class="monitor-val">-</span></div>
+    </div>
+
+    <div class="visualizer" id="visualizer"></div>
+</div>
+
+<script>
+    let audioCtx = null;
+    let isPlaying = false;
+    let timerId = null;
+    let noteIndex = 0;
+
+    let currentSettings = { wave: 'sine', bpm: 120, distortion: 0, drumType: 0, scaleOffset: 0, echo: false };
+
+    const playBtn = document.getElementById('playBtn');
+    const genreInput = document.getElementById('genreInput');
+    const visualizer = document.getElementById('visualizer');
+
+    const monWave = document.getElementById('monWave');
+    const monBpm = document.getElementById('monBpm');
+    const monDrum = document.getElementById('monDrum');
+    const monDist = document.getElementById('monDist');
+    const monOctave = document.getElementById('monOctave');
+
+    for (let i = 0; i < 32; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        visualizer.appendChild(bar);
+    }
+    const bars = document.querySelectorAll('.bar');
+
+    function hashCode(str) {
+        let hash = 0;
+        if (str.length === 0) return hash;
+        for (let i = 0; i < str.length; i++) {
+            const chr = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + chr;
+            hash |= 0; 
+        }
+        return Math.abs(hash);
+    }
+
+    function generateSoundFromText() {
+        const rawText = genreInput.value.trim().toLowerCase();
+        if (rawText === "") {
+            currentSettings = { wave: 'sine', bpm: 120, distortion: 0, drumType: 0, scaleOffset: 0, echo: false };
+            updateMonitor();
+            return;
+        }
+
+        const code = hashCode(rawText);
+        const waves = ['sine', 'triangle', 'sawtooth', 'square'];
+        currentSettings.wave = waves[code % 4];
+        currentSettings.bpm = 80 + (code % 120); // от 80 до 200 BPM
+        currentSettings.distortion = (code % 3 === 0) ? (code % 300) + 50 : 0;
+        currentSettings.drumType = code % 4;
+        currentSettings.scaleOffset = (code % 16) - 8; // сдвиг в пределах одной октавы
+        currentSettings.echo = (code % 4 === 0);
+
+        updateMonitor();
+
+        if (isPlaying) {
+            clearInterval(timerId);
+            let intervalTime = (60000 / currentSettings.bpm) / 2;
+            timerId = setInterval(playStep, intervalTime);
+        }
+    }
+
+    function updateMonitor() {
+        const waveNames = { 'sine': 'Синусоида (Мягкая)', 'triangle': 'Треугольная (Инди/Фолк)', 'sawtooth': 'Пила (Электро/Синт)', 'square': 'Квадрат (Ретро/8-Bit)' };
+        const drumNames = ['Нет', 'Прямой (Хаус/Поп)', 'Частый (Техно)', 'Ломаный бит'];
+
+        monWave.textContent = waveNames[currentSettings.wave] || '-';
+        monBpm.textContent = currentSettings.bpm + ' BPM';
+        monDrum.textContent = drumNames[currentSettings.drumType];
+        monDist.textContent = currentSettings.distortion > 0 ? `Вкл (Уровень: ${currentSettings.distortion})` : 'Выкл';
+        monOctave.textContent = currentSettings.scaleOffset >= 0 ? `+${currentSettings.scaleOffset} полутонов` : `${currentSettings.scaleOffset} полутонов`;
+    }
+
+    genreInput.addEventListener('input', generateSoundFromText);
+
+    playBtn.addEventListener('click', async () => {
+        // Инициализация аудио при клике (снятие блокировки браузера)
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        
+        // Принудительное пробуждение контекста, если браузер его усыпил
+        if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+        }
+
+        if (isPlaying) {
+            isPlaying = false;
+            playBtn.textContent = 'PLAY';
+            playBtn.classList.remove('playing');
+            clearInterval(timerId);
+            stopVisualizer();
+        } else {
+            isPlaying = true;
+            playBtn.textContent = 'STOP';
+            playBtn.classList.add('playing');
+            generateSoundFromText();
+            let intervalTime = (60000 / currentSettings.bpm) / 2;
+            timerId = setInterval(playStep, intervalTime);
+            animateVisualizer();
+        }
+    });
+
+    function playStep() {
+        if (!isPlaying) return;
+
+        const baseNotes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+        let baseFreq = baseNotes[noteIndex % baseNotes.length];
+
+        if (currentSettings.scaleOffset !== 0) {
+            baseFreq = baseFreq * Math.pow(2, currentSettings.scaleOffset / 12);
+        }
+
+        playTone(baseFreq);
+
+        // Включение ударных
+        if (currentSettings.drumType === 1 && noteIndex % 2 === 0) {
+            playDrum(100, 0.1);
+        } else if (currentSettings.drumType === 2) {
+            playDrum(130, 0.06);
+        } else if (currentSettings.drumType === 3 && (noteIndex % 3 === 0 || noteIndex === 7)) {
+            playDrum(85, 0.12);
+        }
+
+        noteIndex = (noteIndex + 1) % 8;
+    }
+
+    function playTone(freq) {
+        if (!audioCtx) return;
+        let osc = audioCtx.createOscillator();
+        let gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        osc.type = currentSettings.wave;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        let duration = currentSettings.echo ? 0.6 : 0.2;
+
+        gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        if (currentSettings.distortion > 0) {
+            let dist = audioCtx.createWaveShaper();
+            dist.curve = makeDistortionCurve(currentSettings.distortion);
+            osc.disconnect(gainNode);
+            osc.connect(dist);
+            dist.connect(gainNode);
+        }
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playDrum(startFreq, length) {
+        if (!audioCtx) return;
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
