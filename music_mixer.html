@@ -1,5 +1,192 @@
-мой сайт и описание для промта 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Древний Гримуар Жанров — Магический Микшер</title>
+    <style>
+        body { font-family: 'Georgia', serif; background: #1a120b; color: #f5ebe0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background-image: radial-gradient(circle, #2c1e15 20%, #120a06 80%); }
+        .container { background: #2c1c12; padding: 40px; border-radius: 8px; box-shadow: 0 30px 80px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.2); width: 680px; border: 3px double #d4af37; text-align: center; position: relative; }
+        h1 { font-size: 24px; margin: 0 0 5px 0; color: #d4af37; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .subtitle { color: #a9927d; font-size: 13px; font-style: italic; margin-bottom: 30px; }
+        .input-group { display: flex; gap: 12px; margin-bottom: 25px; }
+        input[type="text"] { flex: 1; background: #1e110a; border: 1px solid #8b5a2b; padding: 15px 22px; color: #f5ebe0; border-radius: 4px; font-size: 16px; outline: none; font-family: serif; box-shadow: inset 0 2px 4px rgba(0,0,0,0.6); }
+        input[type="text"]:focus { border-color: #d4af37; box-shadow: 0 0 10px rgba(212,175,55,0.3); }
+        button { background: linear-gradient(to bottom, #8b2635, #551622); color: #f5ebe0; border: 1px solid #d4af37; padding: 0 40px; font-size: 16px; font-weight: bold; border-radius: 4px; cursor: pointer; letter-spacing: 1px; text-shadow: 0 1px 2px #000; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
+        button:hover { background: linear-gradient(to bottom, #a23143, #6b1d2b); border-color: #fff; }
+        button.playing { background: linear-gradient(to bottom, #2a7b4c, #164e2f); border-color: #66ff99; }
+        .panel { background: #1e110a; padding: 20px; border-radius: 6px; margin-bottom: 20px; font-family: monospace; font-size: 14px; color: #d4af37; text-align: left; border: 1px solid #8b5a2b; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); }
+        .panel-title { color: #fff; font-weight: bold; margin-bottom: 12px; border-bottom: 1px dashed #8b5a2b; padding-bottom: 5px; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+        .line { margin: 8px 0; display: flex; justify-content: space-between; }
+        .val { color: #f5ebe0; font-weight: bold; }
+        .tags-holder { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; min-height: 35px; }
+        .tag { background: #3d2516; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; box-shadow: 0 2px 4px rgba(0,0,0,0.3); text-shadow: 0 1px 2px #000; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📜 Магический Гримуар Жанров</h1>
+    <div class="subtitle">Смешивайте древние свитки, поджанры и заклинания через запятую</div>
+    <div class="input-group">
+        <input type="text" id="genreInput" placeholder="Сотворите заклинание жанров..." value="Deep House, Trap">
+        <button id="playBtn">PLAY</button>
+    </div>
+    <div class="tags-holder" id="tagsHolder"></div>
+    <div class="panel">
+        <div class="panel-title">🔮 Алхимический мониторинг звуковых элементов:</div>
+        <div class="line"><span>Ритуал ритма (Ударные):</span> <span id="outDrums" class="val">-</span></div>
+        <div class="line"><span>Гул земли (Bass Line):</span> <span id="outBass" class="val">-</span></div>
+        <div class="line"><span>Голос стихий (Инструменты):</span> <span id="outMelody" class="val">-</span></div>
+        <div class="line"><span>Чары и аура (Спецэффекты):</span> <span id="outFX" class="val">-</span></div>
+        <div class="line"><span>Скорость пульсации (BPM):</span> <span id="outBpm" class="val">-</span></div>
+    </div>
+</div>
 
-Энциклопедия Жанров — Аудио-Конструкторbody{font-family:'Segoe UI',sans-serif;background:#0c0f12;color:#c5d1db;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}.container{background:#161b22;padding:40px;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,0.7);width:680px;border:1px solid #45f3ff;text-align:center}h1{font-size:22px;margin:0 0 5px 0;color:#45f3ff;text-transform:uppercase;letter-spacing:2px}.subtitle{color:#66fcf1;font-size:13px;margin-bottom:30px}.input-group{display:flex;gap:12px;margin-bottom:25px}input\[type="text"\]{flex:1;background:#0c0f12;border:2px solid #30363d;padding:15px 22px;color:#fff;border-radius:8px;font-size:16px;outline:none}input\[type="text"\]:focus{border-color:#45f3ff}button{background:#45f3ff;color:#0c0f12;border:none;padding:0 40px;font-size:16px;font-weight:bold;border-radius:8px;cursor:pointer;text-transform:uppercase}button.playing{background:#ff4a4a;color:#fff}.panel{background:#0c0f12;padding:20px;border-radius:10px;margin-bottom:20px;font-family:monospace;font-size:14px;color:#66fcf1;text-align:left;border:1px solid #30363d}.panel-title{color:#45f3ff;font-weight:bold;margin-bottom:12px;border-bottom:1px dashed #30363d;padding-bottom:5px;text-transform:uppercase;font-size:12px}.line{margin:8px 0;display:flex;justify-content:space-between}.val{color:#fff;font-weight:bold}.tags-holder{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;min-height:35px}.tag{background:#21262d;color:#45f3ff;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:bold;border:1px solid #30363d}Генератор Энциклопедии ЖанровСмешивайте любые поджанры и стили из вашей базы данных через запятуюPLAY📡 Мониторинг аудио-синтеза аранжировки:Структура ритма (Ударные): -Плотность баса (Bass Line): -Текстурные инструменты: -Звуковые спецэффекты: -Рассчитанный темп (BPM): -var audioCtx=null,isPlaying=false,mainTimer=null,currentStep=0,currentBpm=120,currentInstrument='sine',hasKick=false,hasSnare=false,hasHiHats=false,hasCowbell=false,hasDistortion=false,hasLoFiNoise=false,hasDeepEcho=false,hasDroneHum=false;var inputEl=document.getElementById('genreInput'),btnEl=document.getElementById('playBtn'),tagsHolder=document.getElementById('tagsHolder');function parseGenreDatabase(){var t=inputEl.value.toLowerCase();tagsHolder.innerHTML='';currentBpm=120;currentInstrument='sine';hasKick=false;hasSnare=false;hasHiHats=false;hasCowbell=false;hasDistortion=false;hasLoFiNoise=false;hasDeepEcho=false;hasDroneHum=false;function c(name){var e=document.createElement('span');e.className='tag';e.textContent='🔮 '+name;tagsHolder.appendChild(e)}if(t.includes('house')||t.includes('хаус')){currentBpm=125;hasKick=true;hasSnare=true;currentInstrument='triangle'}if(t.includes('deep house')){currentBpm=116;hasDeepEcho=true;currentInstrument='sine';c('Deep House')}if(t.includes('tech house')){currentBpm=126;hasHiHats=true;c('Tech House')}if(t.includes('acid house')){currentBpm=128;currentInstrument='sawtooth';hasDistortion=true;c('Acid House 303')}if(t.includes('outsider house')||t.includes('lo-fi house')){hasLoFiNoise=true;hasDistortion=true;c('Outsider Lo-Fi House')}if(t.includes('techno')||t.includes('техно')){currentBpm=135;hasKick=true;hasHiHats=true;currentInstrument='sawtooth'}if(t.includes('minimal techno')){currentBpm=128;hasKick=true;hasHiHats=false;hasSnare=false;c('Minimal Techno')}if(t.includes('industrial techno')){hasDistortion=true;hasSnare=true;currentBpm=140;c('Industrial Techno')}if(t.includes('dub techno')){hasDeepEcho=true;hasDroneHum=true;currentBpm=120;c('Dub Techno')}if(t.includes('drum & bass')||t.includes('jungle')){currentBpm=172;hasKick=true;hasHiHats=true;hasSnare=true;c('Drum & Bass')}if(t.includes('liquid funk')||t.includes('liquid dnb')){currentBpm=165;hasDeepEcho=true;currentInstrument='sine';c('Liquid Funk')}if(t.includes('neurofunk')){currentBpm=175;hasDistortion=true;currentInstrument='sawtooth';c('Neurofunk')}if(t.includes('breakcore')){currentBpm=210;hasDistortion=true;hasSnare=true;hasHiHats=true;c('Breakcore')}if(t.includes('rock')||t.includes('рок')){currentBpm=115;hasKick=true;hasSnare=true;currentInstrument='sawtooth'}if(t.includes('blues rock')){currentBpm=95;currentInstrument='triangle';hasDeepEcho=true;c('Blues Rock')}if(t.includes('psychedelic rock')){currentBpm=100;hasDeepEcho=true;hasDroneHum=true;c('Psychedelic Rock')}if(t.includes('punk rock')){currentBpm=165;hasDistortion=true;c('Punk Rock')}if(t.includes('pop punk')){currentBpm=175;hasKick=true;hasSnare=true;c('Pop Punk')}if(t.includes('crust punk')){currentBpm=220;hasDistortion=true;hasKick=true;c('Crust Punk')}if(t.includes('alternative rock')||t.includes('grunge')||t.includes('гранж')){currentBpm=100;hasDistortion=true;hasSnare=true;c('Alternative Grunge')}if(t.includes('indie rock')){currentBpm=115;currentInstrument='triangle';c('Indie Rock')}if(t.includes('shoegaze')){hasDeepEcho=true;hasDistortion=true;hasDroneHum=true;c('Shoegaze Noise Wall')}if(t.includes('metal')||t.includes('метал')||t.includes('thrash metal')){currentBpm=150;hasKick=true;hasSnare=true;hasDistortion=true;c('Thrash Metal')}if(t.includes('death metal')){currentBpm=160;hasDistortion=true;hasKick=true;c('Death Metal')}if(t.includes('black metal')){currentBpm=180;hasDistortion=true;hasDroneHum=true;c('Black Metal')}if(t.includes('dsbm')){currentBpm=75;hasDroneHum=true;hasDistortion=true;c('DSBM (Depressive Black)')}if(t.includes('djent')){currentBpm=95;hasKick=true;hasDistortion=true;c('Djent Polyrythm')}if(t.includes('hip-hop')||t.includes('рэп')||t.includes('rap')||t.includes('boom bap')){currentBpm=90;hasKick=true;hasSnare=true;hasHiHats=true;currentInstrument='sine';c('Boom Bap OldSchool')}if(t.includes('trap')||t.includes('трэп')){currentBpm=145;hasKick=true;hasHiHats=true;currentInstrument='sine';c('Trap 808 Bass')}if(t.includes('drill')||t.includes('дрил')){currentBpm=140;hasKick=true;hasDroneHum=true;c('UK Drill')}if(t.includes('drift phonk')){currentBpm=155;hasCowbell=true;hasDistortion=true;hasKick=true;c('Drift Phonk')}if(t.includes('r&b')||t.includes('soul')||t.includes('contemporary r&b')){currentBpm=100;hasDeepEcho=true;currentInstrument='sine';c('Contemporary R&B')}if(t.includes('neo-soul')){currentBpm=85;currentInstrument='triangle';hasDeepEcho=true;c('Neo-Soul')}if(t.includes('jazz')||t.includes('джаз')||t.includes('swing')){currentBpm=150;currentInstrument='triangle';hasHiHats=true;c('Jazz Swing')}if(t.includes('bebop')){currentBpm=190;currentInstrument='triangle';c('Bebop Speed')}if(t.includes('modal jazz')||t.includes('smooth jazz')){currentBpm=95;hasDeepEcho=true;c('Smooth Modal Jazz')}if(t.includes('gypsy jazz')){currentBpm=160;currentInstrument='triangle';c('Gypsy Jazz Manouche')}if(t.includes('free jazz')){currentBpm=170;hasDistortion=true;c('Free Jazz Chaos')}if(t.includes('blues')||t.includes('блюз')||t.includes('delta blues')||t.includes('chicago blues')){currentBpm=80;currentInstrument='triangle';hasDeepEcho=true;c('Blues Rhythm')}if(t.includes('pop')||t.includes('поп')||t.includes('dance-pop')){currentBpm=120;hasKick=true;hasSnare=true;c('Dance-Pop')}if(t.includes('k-pop')){currentBpm=130;hasKick=true;hasHiHats=true;hasSnare=true;c('K-Pop Dynamic')}if(t.includes('art pop')){currentBpm=110;hasDeepEcho=true;hasDroneHum=true;c('Art Pop')}if(t.includes('folk')||t.includes('фолк')||t.includes('indie folk')||t.includes('bluegrass')){currentBpm=100;currentInstrument='triangle';c('Acoustic Folk')}if(t.includes('pagan folk')||t.includes('nordic folk')){currentBpm=85;hasDroneHum=true;hasDeepEcho=true;c('Pagan Nordic Folk')}if(t.includes('reggae')||t.includes('регги')||t.includes('dub')||t.includes('даб')){currentBpm=75;hasKick=true;hasDeepEcho=true;currentInstrument='sine';c('Dub Reggae Loops')}if(t.includes('classical')||t.includes('классика')||t.includes('baroque')||t.includes('romanticism')||t.includes('impressionism')){currentBpm=80;currentInstrument='sine';hasDeepEcho=true;c('Academic Classical')}if(t.includes('neoclassical')||t.includes('неоклассика')||t.includes('post-classical')){currentBpm=85;currentInstrument='sine';hasDeepEcho=true;c('Neoclassical')}if(t.includes('minimalism')){currentBpm=120;currentInstrument='sine';hasDeepEcho=true;c('Minimalism Patters')}if(t.includes('harsh noise')){hasDistortion=true;hasLoFiNoise=true;currentBpm=160;c('Harsh Noise Wall')}if(t.includes('drone')||t.includes('дрон')){hasDroneHum=true;hasKick=false;hasSnare=false;c('Drone Textures')}if(t.includes('cinematic')||t.includes('epic cinematic')){currentBpm=90;hasKick=true;hasDeepEcho=true;hasDroneHum=true;c('Epic Cinematic')}document.getElementById('outDrums').textContent=hasKick?(currentBpm>165?"Экстремальный бласт-бит / Перебивки":"Плотный качающий ритм"):"Отсутствует";document.getElementById('outBass').textContent=currentInstrument==='sine'?"Глубокий суб-бас (808 / Аналог)":"Плотный перегруженный бас";document.getElementById('outMelody').textContent=hasCowbell?"Ведущий Ковбелл (Cowbell)":(currentInstrument==='sawtooth'?"Синтезаторная пила / Гитара":"Мягкие аккорды / Клавишные");document.getElementById('outFX').textContent=hasDistortion?"Жесткий Дисторшн / Шум":(hasDeepEcho?"Пространственный реверб (Эхо)":"Чистый з
+<script>
+    var audioCtx = null, isPlaying = false, mainTimer = null, currentStep = 0;
+    var currentBpm = 120, currentInstrument = 'sine', hasKick = false, hasSnare = false;
+    var hasHiHats = false, hasCowbell = false, hasDistortion = false, hasLoFiNoise = false, hasDeepEcho = false, hasDroneHum = false;
+    var inputEl = document.getElementById('genreInput'), btnEl = document.getElementById('playBtn'), tagsHolder = document.getElementById('tagsHolder');
+    function parseGenreDatabase() {
+        var t = inputEl.value.toLowerCase();
+        tagsHolder.innerHTML = '';
+        currentBpm = 120; currentInstrument = 'sine'; hasKick = false; hasSnare = false; hasHiHats = false; hasCowbell = false; hasDistortion = false; hasLoFiNoise = false; hasDeepEcho = false; hasDroneHum = false;
 
-вук");document.getElementById('outBpm').textContent=currentBpm+" BPM";if(isPlaying){clearInterval(mainTimer);mainTimer=setInterval(audioStep,(60000/currentBpm)/2)}}inputEl.addEventListener('input',parseGenreDatabase);btnEl.addEventListener('click',function(){if(!audioCtx){audioCtx=new(window.AudioContext||window.webkitAudioContext)()}if(isPlaying){isPlaying=false;btnEl.textContent='PLAY';btnEl.classList.remove('playing');clearInterval(mainTimer)}else{isPlaying=true;btnEl.textContent='STOP';btnEl.classList.add('playing');parseGenreDatabase();mainTimer=setInterval(audioStep,(60000/currentBpm)/2)}});function audioStep(){if(!audioCtx||!isPlaying)return;var t=\[130.81,146.83,164.81,196,220,261.63,293.66,329.63\];var e=t\[currentStep%t.length\];if(hasDroneHum&&currentStep%4===0){playAcousticTone(65.41,'sine',1.4,0.16,false)}if(!hasDroneHum){if(hasCowbell){playAcousticTone(e*1.5,'square',0.12,0.18,false)}else{playAcousticTone(e,currentInstrument,0.38,0.08,hasDistortion)}}if(hasKick&&currentStep%2===0){playDrumKick()}if(hasSnare&&currentStep%4===2){playDrumSnare()}if(hasHiHats&&currentStep%2===1){playHiHat()}if(hasLoFiNoise&&Math.random()>0.4){playHiHat()}currentStep++}function playAcousticTone(t,e,c,n,i){var a=audioCtx.createOscillator();var r=audioCtx.createGain();a.type=e;a.frequency.setValueAtTime(t,audioCtx.currentTime);r.gain.setValueAtTime(0,audioCtx.currentTime);r.gain.linearRampToValueAtTime(n,audioCtx.currentTime+0.05);r.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+c);if(hasDeepEcho){var o=audioCtx.createDelay();var s=audioCtx.createGain();o.delayTime.value=0.35;s.gain.value=0.45;a.connect(r);r.connect(o);o.connect(s);s.connect(o);o.connect(audioCtx.destination)}if(i){var u=audioCtx.createWaveShaper();u.curve=makeDistortionCurve(380);a.connect(u);u.connect(r)}else{a.connect(r)}r.connect(audioCtx.destination);a.start();a.stop(audioCtx.currentTime+c)}function playDrumKick(){var t=audioCtx.createOscillator();var e=audioCtx.createGain();t.connect(e);e.connect(audioCtx.destination);t.frequency.setValueAtTime(140,audioCtx.currentTime);t.frequency.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.15);e.gain.setValueAtTime(0.28,audioCtx.currentTime);e.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.15);t.start();t.stop(audioCtx.currentTime+0.15)}function playDrumSnare(){var t=audioCtx.createOscillator();var e=audioCtx.createGain();t.type='triangle';t.connect(e);e.connect(audioCtx.destination);t.frequency.setValueAtTime(260,audioCtx.currentTime);t.frequency.exponentialRampToValueAtTime(70,audioCtx.currentTime+0.11);e.gain.setValueAtTime(0.16,audioCtx.currentTime);e.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.11);t.start();t.stop(audioCtx.currentTime+0.11)}function playHiHat(){var t=audioCtx.createOscillator();var e=audioCtx.createGain();t.type='square';t.frequency.setValueAtTime(9500,audioCtx.currentTime);t.connect(e);e.connect(audioCtx.destination);e.gain.setValueAtTime(0.025,audioCtx.currentTime);e.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.05);t.start();t.stop(audioCtx.currentTime+0.05)}function makeDistortionCurve(t){var e=t,c=44100,n=new Float32Array(c),i=Math.PI/180,a=0,r;for(;a<c;++a){r=a*2/c-1;n\[a\]=(3+e)*r*12 *i/(Math.PI+e*Math.abs(r))}return n}parseGenreDatabase();
+        function c(name) {
+            var e = document.createElement('span');
+            e.className = 'tag'; e.textContent = '✨ ' + name; tagsHolder.appendChild(e);
+        }
+
+        if (t.includes('house') || t.includes('хаус')) { currentBpm = 125; hasKick = true; hasSnare = true; currentInstrument = 'triangle'; }
+        if (t.includes('deep house')) { currentBpm = 116; hasDeepEcho = true; currentInstrument = 'sine'; c('Deep House'); }
+        if (t.includes('tech house')) { currentBpm = 126; hasHiHats = true; c('Tech House'); }
+        if (t.includes('acid house')) { currentBpm = 128; currentInstrument = 'sawtooth'; hasDistortion = true; c('Acid House 303'); }
+        if (t.includes('outsider house') || t.includes('lo-fi house')) { hasLoFiNoise = true; hasDistortion = true; c('Outsider Lo-Fi House'); }
+        if (t.includes('techno') || t.includes('техно')) { currentBpm = 135; hasKick = true; hasHiHats = true; currentInstrument = 'sawtooth'; }
+        if (t.includes('minimal techno')) { currentBpm = 128; hasKick = true; hasHiHats = false; hasSnare = false; c('Minimal Techno'); }
+        if (t.includes('industrial techno')) { hasDistortion = true; hasSnare = true; currentBpm = 140; c('Industrial Techno'); }
+        if (t.includes('dub techno')) { hasDeepEcho = true; hasDroneHum = true; currentBpm = 120; c('Dub Techno'); }
+        if (t.includes('drum & bass') || t.includes('jungle')) { currentBpm = 172; hasKick = true; hasHiHats = true; hasSnare = true; c('Drum & Bass'); }
+        if (t.includes('liquid funk') || t.includes('liquid dnb')) { currentBpm = 165; hasDeepEcho = true; currentInstrument = 'sine'; c('Liquid Funk'); }
+        if (t.includes('neurofunk')) { currentBpm = 175; hasDistortion = true; currentInstrument = 'sawtooth'; c('Neurofunk'); }
+        if (t.includes('breakcore')) { currentBpm = 210; hasDistortion = true; hasSnare = true; hasHiHats = true; c('Breakcore'); }
+        if (t.includes('rock') || t.includes('рок')) { currentBpm = 115; hasKick = true; hasSnare = true; currentInstrument = 'sawtooth'; }
+        if (t.includes('blues rock')) { currentBpm = 95; currentInstrument = 'triangle'; hasDeepEcho = true; c('Blues Rock'); }
+        if (t.includes('psychedelic rock')) { currentBpm = 100; hasDeepEcho = true; hasDroneHum = true; c('Psychedelic Rock'); }
+        if (t.includes('punk rock')) { currentBpm = 165; hasDistortion = true; c('Punk Rock'); }
+        if (t.includes('pop punk')) { currentBpm = 175; hasKick = true; hasSnare = true; c('Pop Punk'); }
+        if (t.includes('crust punk')) { currentBpm = 220; hasDistortion = true; hasKick = true; c('Crust Punk'); }
+        if (t.includes('alternative rock') || t.includes('grunge') || t.includes('гранж')) { currentBpm = 100; hasDistortion = true; hasSnare = true; c('Alternative Grunge'); }
+        if (t.includes('indie rock')) { currentBpm = 115; currentInstrument = 'triangle'; c('Indie Rock'); }
+        if (t.includes('shoegaze')) { hasDeepEcho = true; hasDistortion = true; hasDroneHum = true; c('Shoegaze Noise Wall'); }
+        if (t.includes('metal') || text.includes('метал')) { currentBpm = 150; hasKick = true; hasSnare = true; hasDistortion = true; c('Metal'); }
+        if (t.includes('death metal')) { currentBpm = 160; hasDistortion = true; hasKick = true; c('Death Metal'); }
+        if (t.includes('black metal')) { currentBpm = 180; hasDistortion = true; hasDroneHum = true; c('Black Metal'); }
+        if (t.includes('dsbm')) { currentBpm = 75; hasDroneHum = true; hasDistortion = true; c('DSBM (Depressive Black)'); }
+        if (t.includes('djent')) { currentBpm = 95; hasKick = true; hasDistortion = true; c('Djent Polyrythm'); }
+        if (t.includes('hip-hop') || t.includes('рэп') || t.includes('rap')) { currentBpm = 90; hasKick = true; hasSnare = true; hasHiHats = true; currentInstrument = 'sine'; c('Hip-Hop OldSchool'); }
+        if (t.includes('trap') || t.includes('трэп')) { currentBpm = 145; hasKick = true; hasHiHats = true; currentInstrument = 'sine'; c('Trap 808 Bass'); }
+        if (t.includes('drill')) { currentBpm = 140; hasKick = true; hasDroneHum = true; c('UK Drill'); }
+        if (t.includes('drift phonk')) { currentBpm = 155; hasCowbell = true; hasDistortion = true; hasKick = true; c('Drift Phonk'); }
+        if (t.includes('r&b') || t.includes('soul')) { currentBpm = 100; hasDeepEcho = true; currentInstrument = 'sine'; c('R&B Soul'); }
+        if (t.includes('neo-soul')) { currentBpm = 85; currentInstrument = 'triangle'; hasDeepEcho = true; c('Neo-Soul'); }
+        if (t.includes('jazz') || t.includes('джаз')) { currentBpm = 150; currentInstrument = 'triangle'; hasHiHats = true; c('Jazz'); }
+        if (t.includes('pop') || t.includes('поп')) { currentBpm = 120; hasKick = true; hasSnare = true; c('Pop Music'); }
+        if (t.includes('k-pop')) { currentBpm = 130; hasKick = true; hasHiHats = true; hasSnare = true; c('K-Pop Dynamic'); }
+        if (t.includes('folk') || t.includes('фолк') || t.includes('pagan folk')) { currentBpm = 90; currentInstrument = 'triangle'; c('Folk Roots'); }
+        if (t.includes('reggae') || t.includes('dub')) { currentBpm = 75; hasKick = true; hasDeepEcho = true; currentInstrument = 'sine'; c('Dub Reggae'); }
+        if (t.includes('classical') || t.includes('классика')) { currentBpm = 80; currentInstrument = 'sine'; hasDeepEcho = true; c('Classical'); }
+        if (t.includes('drone') || t.includes('дрон')) { hasDroneHum = true; hasKick = false; hasSnare = false; c('Drone Ambient'); }
+        document.getElementById('outDrums').textContent = hasKick ? (currentBpm > 165 ? "Древний марш / Быстрый темп" : "Плотный ритуальный бой бочки") : "Тишина (Медитация)";
+        document.getElementById('outBass').textContent = currentInstrument === 'sine' ? "Низкий гул подземелья (Суб-бас)" : "Тяжелый металлический скрежет земли";
+        document.getElementById('outMelody').textContent = hasCowbell ? "Чарующий ритуальный звон ковбелла" : (currentInstrument === 'sawtooth' ? "Магическое пламя пилы / Рифф струн" : "Древний перебор лютни / Мягкие аккорды");
+        document.getElementById('outFX').textContent = hasDistortion ? "Стена шума / Искажение заклинания" : (hasDeepEcho ? "Эхо в катакомбах / Объемная аура" : "Чистый природный тон");
+        document.getElementById('outBpm').textContent = currentBpm + " ударов";
+
+        if (isPlaying) {
+            clearInterval(mainTimer);
+            mainTimer = setInterval(audioStep, (60000 / currentBpm) / 2);
+        }
+    }
+
+    inputEl.addEventListener('input', parseGenreDatabase);
+    btnEl.addEventListener('click', function() {
+        if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+        if (isPlaying) {
+            isPlaying = false; btnEl.textContent = 'PLAY'; btnEl.classList.remove('playing'); clearInterval(mainTimer);
+        } else {
+            isPlaying = true; btnEl.textContent = 'STOP'; btnEl.classList.add('playing'); parseGenreDatabase(); mainTimer = setInterval(audioStep, (60000 / currentBpm) / 2);
+        }
+    });
+
+    function audioStep() {
+        if (!audioCtx || !isPlaying) return;
+        var t = [130.81, 146.83, 164.81, 196, 220, 261.63, 293.66, 329.63];
+        var e = t[currentStep % t.length];
+        if (hasDroneHum && currentStep % 4 === 0) { playAcousticTone(65.41, 'sine', 1.4, 0.16, false); }
+        if (!hasDroneHum) {
+            if (hasCowbell) { playAcousticTone(e * 1.5, 'square', 0.12, 0.18, false); } 
+            else { playAcousticTone(e, currentInstrument, 0.38, 0.08, hasDistortion); }
+        }
+        if (hasKick && currentStep % 2 === 0) { playDrumKick(); }
+        if (hasSnare && currentStep % 4 === 2) { playDrumSnare(); }
+        if (hasHiHats && currentStep % 2 === 1) { playHiHat(); }
+        if (hasLoFiNoise && Math.random() > 0.4) { playHiHat(); }
+        currentStep++;
+    }
+
+    function playAcousticTone(t, e, c, n, i) {
+        var a = audioCtx.createOscillator(); var r = audioCtx.createGain();
+        a.type = e; a.frequency.setValueAtTime(t, audioCtx.currentTime);
+        r.gain.setValueAtTime(0, audioCtx.currentTime);
+        r.gain.linearRampToValueAtTime(n, audioCtx.currentTime + 0.05);
+        r.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + c);
+        if (hasDeepEcho) {
+            var o = audioCtx.createDelay(); var s = audioCtx.createGain();
+            o.delayTime.value = 0.35; s.gain.value = 0.45;
+            a.connect(r); r.connect(o); o.connect(s); s.connect(o); o.connect(audioCtx.destination);
+        }
+        if (i) {
+            var u = audioCtx.createWaveShaper(); u.curve = makeDistortionCurve(380);
+            a.connect(u); u.connect(r);
+        } else { a.connect(r); }
+        r.connect(audioCtx.destination); a.start(); a.stop(audioCtx.currentTime + c);
+    }
+
+    function playDrumKick() {
+        var t = audioCtx.createOscillator(); var e = audioCtx.createGain();
+        t.connect(e); e.connect(audioCtx.destination);
+        t.frequency.setValueAtTime(140, audioCtx.currentTime);
+        t.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+        e.gain.setValueAtTime(0.28, audioCtx.currentTime);
+        e.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+        t.start(); t.stop(audioCtx.currentTime + 0.15);
+    }
+
+    function playDrumSnare() {
+        var t = audioCtx.createOscillator(); var e = audioCtx.createGain();
+        t.type = 'triangle'; t.connect(e); e.connect(audioCtx.destination);
+        t.frequency.setValueAtTime(260, audioCtx.currentTime);
+        t.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.11);
+        e.gain.setValueAtTime(0.16, audioCtx.currentTime);
+        e.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.11);
+        t.start(); t.stop(audioCtx.currentTime + 0.11);
+    }
+
+    function playHiHat() {
+        var t = audioCtx.createOscillator(); var e = audioCtx.createGain();
+        t.type = 'square'; t.frequency.setValueAtTime(9500, audioCtx.currentTime);
+        t.connect(e); e.connect(audioCtx.destination);
+        e.gain.setValueAtTime(0.025, audioCtx.currentTime);
+        e.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+        t.start(); t.stop(audioCtx.currentTime + 0.05);
+    }
+
+    function makeDistortionCurve(t) {
+        var e = t, c = 44100, n = new Float32Array(c), i = Math.PI / 180, a = 0, r;
+        for (; a < c; ++a) { r = a * 2 / c - 1; n[a] = (3 + e) * r * 12 * i / (Math.PI + e * Math.abs(r)); }
+        return n;
+    }
+    parseGenreDatabase();
+</script>
+</body>
+</html>
