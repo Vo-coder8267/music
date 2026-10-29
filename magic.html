@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100c16">
-<title>Музыкальная алхимия — бесплатная лаборатория</title>
+<title>Музыкальная алхимия — v8, выразительная мелодия</title>
 <style>
 :root{color-scheme:dark;--bg:#100d15;--panel:#1b1522;--line:#45334f;--text:#f6effa;--muted:#b8a8c5;--gold:#e5c184;--violet:#b29af7;--green:#9bdab5}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0,#3b2348 0,transparent 40%),var(--bg);color:var(--text);font:15px/1.5 system-ui,Segoe UI,sans-serif}
@@ -129,10 +129,16 @@ function osc(freq,start,dur,wave,amp=0.1,opts={}){
  pan.pan.value=opts.pan||0;
  const peak=Math.max(.0002,amp*.62);
  g.gain.setValueAtTime(.0001,start);
- g.gain.linearRampToValueAtTime(peak,start+Math.min(opts.attack||.12,dur*.42));
- // Soft natural swell and release: less abrupt, less "beep-like".
- g.gain.setValueAtTime(peak*.92,Math.max(start+.06,start+dur*.48));
- g.gain.linearRampToValueAtTime(peak*.38,Math.max(start+.08,start+dur*.84));
+ if(opts.lead){
+  const attack=Math.min(opts.attack||.10,dur*.34);
+  g.gain.linearRampToValueAtTime(peak,start+Math.max(.025,attack));
+  g.gain.exponentialRampToValueAtTime(Math.max(.0002,peak*.56),Math.min(start+dur*.42,start+Math.max(.06,attack+.10)));
+  g.gain.setTargetAtTime(Math.max(.0002,peak*.46),Math.min(start+dur*.42,start+Math.max(.06,attack+.10)),Math.max(.035,dur*.12));
+ }else{
+  g.gain.linearRampToValueAtTime(peak,start+Math.min(opts.attack||.12,dur*.42));
+  g.gain.setValueAtTime(peak*.92,Math.max(start+.06,start+dur*.48));
+  g.gain.linearRampToValueAtTime(peak*.38,Math.max(start+.08,start+dur*.84));
+ }
  g.gain.exponentialRampToValueAtTime(.0001,start+dur);
  o.connect(f); f.connect(g); g.connect(pan); pan.connect(master);
  o.start(start); o.stop(start+dur+.04); nodes.push(o);
@@ -207,7 +213,7 @@ function schedule(){
  }
  timer=setTimeout(schedule,beat*8000);
 }
-async function play(){if(playing){stop()}ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent='Версия 7: мелодия выдвинута вперёд, добавлены мягкое движение высоты и тихий обертон; ритм и гармония немного приглушены.';schedule();}
+async function play(){if(playing){stop()}ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent='Версия 8: более выразительный тембр мелодии с мягкой атакой и естественным спадом; ритм и гармония поддерживают её.';schedule();}
 function stop(){playing=false;clearTimeout(timer);nodes.forEach(n=>{try{n.stop()}catch(e){}});nodes=[];$('art').classList.remove('playing');}
 $('play').onclick=play;$('stop').onclick=()=>{stop();$('synthStatus').textContent='Остановлено.'};$('rune').textContent='✧';
 $('bars').innerHTML=Array.from({length:31},()=>'<i></i>').join('');
@@ -220,12 +226,12 @@ async function renderWav(){
  const wet=off.createGain();wet.gain.value=+$('space').value/100*.12;
  master.connect(comp);comp.connect(off.destination);master.connect(delay);delay.connect(fb);fb.connect(delay);delay.connect(wet);wet.connect(comp);
  const p=current(),beat=60/(+$('bpm').value),int=+$('intensity').value/100,kinds=p.kinds||[p.kind],scale=p.scale.length?p.scale:[0,3,5,7,10];
- function tone(freq,t,d,w,a,pan=0,cutoff=3000,detune=0,warm=false){
+ function tone(freq,t,d,w,a,pan=0,cutoff=3000,detune=0,warm=false,lead=false){
   const o=off.createOscillator(),f=off.createBiquadFilter(),g=off.createGain(),st=off.createStereoPanner();
   o.type=w;o.frequency.setValueAtTime(freq,t);o.detune.value=detune;f.type='lowpass';f.frequency.value=cutoff;st.pan.value=pan;
   // Small, slow pitch movement plus a quiet octave partial softens the artificial lead tone.
   const lfo=off.createOscillator(),lg=off.createGain();lfo.frequency.value=4.6;lg.gain.value=warm?2.2:0;lfo.connect(lg);lg.connect(o.frequency);lfo.start(t);lfo.stop(Math.min(seconds,t+d+.02));
-  g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(Math.max(.0002,a),t+Math.min(.12,d*.3));g.gain.setValueAtTime(Math.max(.0002,a*.7),Math.max(t+.02,t+d*.65));g.gain.exponentialRampToValueAtTime(.0001,Math.min(seconds,t+d));
+  g.gain.setValueAtTime(.0001,t);if(lead){const at=Math.min(.085,d*.28);g.gain.linearRampToValueAtTime(Math.max(.0002,a),t+Math.max(.025,at));g.gain.exponentialRampToValueAtTime(Math.max(.0002,a*.58),Math.min(t+d*.42,t+Math.max(.06,at+.10)));g.gain.setTargetAtTime(Math.max(.0002,a*.46),Math.min(t+d*.42,t+Math.max(.06,at+.10)),Math.max(.035,d*.12));}else{g.gain.linearRampToValueAtTime(Math.max(.0002,a),t+Math.min(.12,d*.3));g.gain.setValueAtTime(Math.max(.0002,a*.7),Math.max(t+.02,t+d*.65));}g.gain.exponentialRampToValueAtTime(.0001,Math.min(seconds,t+d));
   o.connect(f);f.connect(g);g.connect(st);st.connect(master);o.start(t);o.stop(Math.min(seconds,t+d+.03));
   if(warm){const h=off.createOscillator(),hf=off.createBiquadFilter(),hg=off.createGain();h.type='sine';h.frequency.setValueAtTime(freq*2,t);hf.type='lowpass';hf.frequency.value=Math.min(2100,cutoff*1.25);hg.gain.setValueAtTime(.0001,t);hg.gain.linearRampToValueAtTime(Math.max(.0001,a*.12),t+Math.min(.12,d*.3));hg.gain.exponentialRampToValueAtTime(.0001,Math.min(seconds,t+d));h.connect(hf);hf.connect(hg);hg.connect(st);h.start(t);h.stop(Math.min(seconds,t+d+.03));}
  }
@@ -260,7 +266,7 @@ async function renderWav(){
     [{step:0,n:0,len:1.00,v:.92},{step:2,n:2,len:.78,v:.76},{step:5,n:4,len:1.00,v:.90}]
    ];
    const note=motifs[bar%motifs.length].find(x=>x.step===i);
-   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.58))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.58)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'sine',(heavy||dance?.060:.055)*int*note.v,Math.sin(i+bar)*.07,heavy?820:1450,0,true)}
+   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.58))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.58)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'triangle',(heavy||dance?.072:.068)*int*note.v,Math.sin(i+bar)*.09,heavy?1050:(folk?1900:1650),0,true,true)}
   }
  }
  // Fade in/out avoids clicks at file boundaries.
@@ -270,7 +276,7 @@ async function renderWav(){
  str(0,'RIFF');v.setUint32(4,36+samples*4,true);str(8,'WAVE');str(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,2,true);v.setUint32(24,sr,true);v.setUint32(28,sr*4,true);v.setUint16(32,4,true);v.setUint16(34,16,true);str(36,'data');v.setUint32(40,samples*4,true);
  for(let i=0,o=44;i<samples;i++,o+=4){const fade=Math.min(1,i/(sr*.12),(samples-i)/(sr*.35));for(let c=0;c<2;c++){const x=(c?right:left)[i]*Math.max(0,fade),s=Math.max(-1,Math.min(1,x));v.setInt16(o+c*2,s<0?s*32768:s*32767,true)}}
  const url=URL.createObjectURL(new Blob([bytes],{type:'audio/wav'})),a=document.createElement('a');a.href=url;a.download=(genres.join('_')||'alchemy_sketch').replace(/[^\wа-яё-]+/gi,'_')+'.wav';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
- $('synthStatus').textContent='WAV сохранён: 16 секунд. Учтены переключатели микшера и более мягкая обработка электронной части. '+(Object.keys(sampleBuffers).length?'Использованы загруженные сэмплы там, где они подходят.':'Использованы встроенные синтезированные звуки.');
+ $('synthStatus').textContent='WAV сохранён: 16 секунд. Учтены переключатели микшера и новая огибающая мелодии. '+(Object.keys(sampleBuffers).length?'Использованы загруженные сэмплы там, где они подходят.':'Использованы встроенные синтезированные звуки.');
 }
 $('wav').onclick=renderWav;
 function savedLoad(){let arr=[];try{arr=JSON.parse(localStorage.getItem('alchemyIdeas')||'[]')}catch(e){}$('saved').innerHTML='';arr.forEach((x,i)=>{let d=document.createElement('div');d.className='saved';let s=document.createElement('span');s.textContent=x.genres.join(' × ')+' · '+x.bpm+' BPM';let group=document.createElement('div'),load=document.createElement('button'),del=document.createElement('button');load.className='btn small';load.textContent='Загрузить';load.onclick=()=>{genres=x.genres.slice();$('bpm').value=x.bpm;$('intensity').value=x.intensity;$('space').value=x.space;$('volume').value=x.volume;render();outputs()};del.className='btn small';del.textContent='×';del.onclick=()=>{arr.splice(i,1);localStorage.setItem('alchemyIdeas',JSON.stringify(arr));savedLoad()};group.append(load,del);d.append(s,group);$('saved').append(d)})}
