@@ -41,10 +41,21 @@ main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{d
 <button class="btn" data-g="Pagan Folk">Pagan Folk</button><button class="btn" data-g="Bebop">Bebop</button><button class="btn" data-g="Delta Blues">Delta Blues</button><button class="btn" data-g="Black Metal">Black Metal</button><button class="btn" data-g="Deep House">Deep House</button><button class="btn" data-g="Industrial Techno">Industrial Techno</button><button class="btn" data-g="Dark Ambient">Dark Ambient</button><button class="btn" data-g="Boom Bap">Boom Bap</button><button class="btn" data-g="Jazz Fusion">Jazz Fusion</button><button class="btn" data-g="Breakcore">Breakcore</button><button class="btn" data-g="Neoclassical">Neoclassical</button><button class="btn" data-g="Harsh Noise">Harsh Noise</button><button class="btn" data-g="Drift Phonk">Drift Phonk</button><button class="btn" data-g="Indie Folk">Indie Folk</button><button class="btn" data-g="Cinematic">Cinematic</button><button class="btn" data-g="Trap">Trap</button></div>
 </div></section></div><div class="footer">Музыкальная алхимия · гибридный sampler + синтез · локальный экспорт WAV · никаких платных ключей</div></main>
 <script>
-(()=>{'use strict';
-const $=id=>document.getElementById(id);let genres=[],ctx=null,master=null,delay=null,feedback=null,nodes=[],timer=null,playing=false;
-const sampleBuffers={}; let sampleNames=[];
-const prof={
+document.querySelectorAll('[data-g]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const wasEmpty = genres.length === 0;
+    addGenres(b.dataset.g);
+
+    if (wasEmpty) {
+      $('bpm').value = current().bpm;
+      outputs();
+    }
+
+    stop();
+    $('synthStatus').textContent =
+      'Жанры выбраны. Можно добавлять другие и смешивать их.';
+  });
+});
 'pagan folk':{bpm:82,shape:'triangle',scale:[0,3,5,7,10],glyph:'☽',desc:'Ритуальный пульс, модальная мелодия и дрон',kind:'tribal'},
 'folk':{bpm:96,shape:'triangle',scale:[0,2,4,7,9],glyph:'♧',desc:'Фолковая мелодия и спокойный акустический характер',kind:'folk'},
 'black metal':{bpm:168,shape:'sawtooth',scale:[0,1,5,7,8],glyph:'†',desc:'Быстрый холодный пульс и диссонанс',kind:'blast'},
