@@ -113,7 +113,20 @@ function current(){
 function render(){ $('chips').innerHTML='';genres.forEach((g,i)=>{let el=document.createElement('span');el.className='chip';el.append(document.createTextNode(g));let b=document.createElement('button');b.textContent='×';b.title='Удалить жанр';b.onclick=()=>{genres.splice(i,1);render()};el.append(b);$('chips').append(el)});let p=current();if(!genres.length){$('title').textContent='Неизвестная формула';$('desc').textContent='Добавь жанр и нажми «Слушать эскиз».';$('rune').textContent='✧';return}$('title').textContent=genres.join(' × ');$('desc').textContent=p.desc;$('rune').textContent=p.glyph;$('bpm').value=p.bpm;outputs();}
 function outputs(){$('bpmO').textContent=$('bpm').value;$('intO').textContent=$('intensity').value+'%';$('spaceO').textContent=$('space').value+'%';$('volumeO').textContent=$('volume').value+'%';}
 function addGenres(s){s.split(/[,;+\n]/).map(x=>x.trim()).filter(Boolean).forEach(g=>{if(!genres.some(a=>norm(a)===norm(g)))genres.push(g)});render();}
-$('add').onclick=()=>{addGenres($('genreInput').value);$('genreInput').value=''};$('genreInput').addEventListener('keydown',e=>{if(e.key==='Enter'){$('add').click()}});document.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>{genres=[b.dataset.g];render();stop();$('synthStatus').textContent='Стиль выбран. Нажми «Слушать эскиз» или экспортируй WAV.'}));['bpm','intensity','space','volume'].forEach(id=>$(id).addEventListener('input',outputs));outputs();
+$('add').addEventListener('click', function() {
+  const input = $('genreInput');
+  const value = input.value.trim();
+
+  if (!value) {
+    input.focus();
+    $('synthStatus').textContent = 'Сначала введи название жанра!';
+    return;
+  }
+
+  addGenres(value);
+  input.value = '';
+  $('synthStatus').textContent = 'Жанр добавлен! Можно добавить ещё один.';
+});$('genreInput').addEventListener('keydown',e=>{if(e.key==='Enter'){$('add').click()}});document.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>{genres=[b.dataset.g];render();stop();$('synthStatus').textContent='Стиль выбран. Нажми «Слушать эскиз» или экспортируй WAV.'}));['bpm','intensity','space','volume'].forEach(id=>$(id).addEventListener('input',outputs));outputs();
 function ensure(){
  if(!ctx){
   ctx=new(window.AudioContext||window.webkitAudioContext)();
