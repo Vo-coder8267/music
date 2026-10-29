@@ -123,6 +123,8 @@ function osc(freq,start,dur,wave,amp=0.1,opts={}){
  const o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter(),pan=ctx.createStereoPanner();
  o.type=wave; o.frequency.setValueAtTime(freq,start);
  if(opts.detune)o.detune.setValueAtTime(opts.detune,start);
+ // Very gentle pitch movement makes the lead feel less like a static test tone.
+ if(opts.vibrato){const lfo=ctx.createOscillator(),lg=ctx.createGain();lfo.type='sine';lfo.frequency.value=4.6;lg.gain.value=opts.vibrato;lfo.connect(lg);lg.connect(o.frequency);lfo.start(start);lfo.stop(start+dur+.03);nodes.push(lfo);}
  f.type=opts.filter||'lowpass'; f.frequency.setValueAtTime(opts.cutoff||1500,start); f.Q.value=opts.q||.45;
  pan.pan.value=opts.pan||0;
  const peak=Math.max(.0002,amp*.62);
@@ -134,6 +136,8 @@ function osc(freq,start,dur,wave,amp=0.1,opts={}){
  g.gain.exponentialRampToValueAtTime(.0001,start+dur);
  o.connect(f); f.connect(g); g.connect(pan); pan.connect(master);
  o.start(start); o.stop(start+dur+.04); nodes.push(o);
+ // A quiet octave harmonic adds a little body without turning the whole mix brighter.
+ if(opts.warm){const h=ctx.createOscillator(),hg=ctx.createGain(),hf=ctx.createBiquadFilter();h.type='sine';h.frequency.setValueAtTime(freq*2,start);hf.type='lowpass';hf.frequency.setValueAtTime(Math.min(2100,(opts.cutoff||1500)*1.25),start);hg.gain.setValueAtTime(.0001,start);hg.gain.linearRampToValueAtTime(Math.max(.0001,peak*.13),start+Math.min(opts.attack||.12,dur*.42));hg.gain.exponentialRampToValueAtTime(.0001,start+dur);h.connect(hf);hf.connect(hg);hg.connect(pan);h.start(start);h.stop(start+dur+.04);nodes.push(h);}
 }
 function kick(t,level=1){
  const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';
@@ -171,7 +175,7 @@ function schedule(){
    const chord=[root,scale[(degree+2)%scale.length]??7,scale[(degree+4)%scale.length]??10];
    if(trackOn('trackAcoustic')&&(orchestral||folk)){const f=folk?523.25:110;if(!triggerSample(folk?'flute':'strings',barStart,1,Math.min(.8,beat*3))){osc(f,barStart,Math.min(beat*3.2,3.2),'sine',.018*int,{cutoff:orchestral?1600:2600,attack:Math.min(.65,beat*1.2),pan:folk?.22:-.28});if(orchestral)osc(f*1.5,barStart+.025,Math.min(beat*3,3),'triangle',.012*int,{cutoff:2200,attack:.45,pan:.28});}}if(trackOn('trackElectronic')&&electronic)osc(55,barStart,Math.min(beat*1.6,1.6),'sine',.0025*int,{cutoff:heavy?240:300,attack:.18,pan:0});if(trackOn('trackHarmony'))chord.forEach((semi,j)=>{
     const f=110*Math.pow(2/(1),semi/12);
-    osc(f,barStart,Math.min(2.8*beat,beat*2.6),'sine',(ambient?.006:.0042)*int,{cutoff:ambient?620:780,detune:0,pan:(j-1)*.22,attack:Math.min(.9,beat*1.4)});
+    osc(f,barStart,Math.min(2.8*beat,beat*2.6),'sine',(ambient?.0048:.0034)*int,{cutoff:ambient?620:780,detune:0,pan:(j-1)*.22,attack:Math.min(.9,beat*1.4)});
    });
   }
   for(let i=0;i<8;i++){
@@ -182,7 +186,7 @@ function schedule(){
     if(heavy||kinds.includes('break')){if(!triggerSample('snare',t,1,.8))noise(t,.10,.065,650);}
     else if(dance){if(!triggerSample('snare',t,1,.65))noise(t,.065,.038,1100);}
    }
-   if(trackOn('trackDrums')&&(dance||heavy||kinds.some(k=>['hiphop','break','jazz','tribal'].includes(k)))&&i%2===1){if(!triggerSample('hat',t,1,ambient?.12:.24))noise(t,.045,ambient?.003:.005,1900);} // sampled hi-hat when provided
+   if(trackOn('trackDrums')&&(dance||heavy||kinds.some(k=>['hiphop','break','jazz','tribal'].includes(k)))&&i%2===1){if(!triggerSample('hat',t,1,ambient?.12:.24))noise(t,.045,ambient?.0025:.0038,1750);} // sampled hi-hat when provided
    // Певучая фраза с паузами, разной длительностью и выразительным окончанием.
    const motifs=[
     [{step:0,n:0,len:1.45,v:1.00},{step:2,n:2,len:.72,v:.72},{step:4,n:1,len:.88,v:.78},{step:6,n:3,len:1.55,v:1.05}],
@@ -196,19 +200,19 @@ function schedule(){
     const semi=scale[ix]+octave, f=146.83*Math.pow(2,semi/12), phraseEnd=note.len>1.2;
     const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');
     if(!(trackOn('trackAcoustic')&&triggerSample(melodicSample,t,f/130.81,.58))&&!(trackOn('trackAcoustic')&&triggerSample('guitar',t,f/130.81,.58)))
-      osc(f,t,Math.min(beat*note.len,2.0), 'sine',.046*int*note.v,{cutoff:heavy?900:1250,detune:0,pan:Math.sin(i+bar)*.07,attack:phraseEnd?.30:.16});
+      osc(f,t,Math.min(beat*note.len,2.0), 'sine',(heavy||dance?.078:.072)*int*note.v,{cutoff:heavy?820:1450,detune:0,pan:Math.sin(i+bar)*.07,attack:phraseEnd?.26:.14,vibrato:heavy?1.8:2.6,warm:true});
    }
    if((kinds.includes('noise')||/noise/i.test(genres.join(' ')))&&i%4===2)noise(t,.18,.12,450);
   }
  }
  timer=setTimeout(schedule,beat*8000);
 }
-async function play(){if(playing){stop()}ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent='Версия 6: мелодические фразы с паузами, разной длительностью и динамикой; сопровождение тише. Тембр всё ещё синтезированный черновой.';schedule();}
+async function play(){if(playing){stop()}ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent='Версия 7: мелодия выдвинута вперёд, добавлены мягкое движение высоты и тихий обертон; ритм и гармония немного приглушены.';schedule();}
 function stop(){playing=false;clearTimeout(timer);nodes.forEach(n=>{try{n.stop()}catch(e){}});nodes=[];$('art').classList.remove('playing');}
 $('play').onclick=play;$('stop').onclick=()=>{stop();$('synthStatus').textContent='Остановлено.'};$('rune').textContent='✧';
 $('bars').innerHTML=Array.from({length:31},()=>'<i></i>').join('');
 async function renderWav(){
- stop();$('synthStatus').textContent='Создаю WAV с более выразительной мелодической фразой, паузами и приглушённым фоном…';
+ stop();$('synthStatus').textContent='Создаю WAV v7: мелодия громче, тембр теплее, ритмический фон мягче…';
  const sr=24000,seconds=16,frames=sr*seconds,off=new OfflineAudioContext(2,frames,sr);
  const master=off.createGain();master.gain.value=+$('volume').value/100*.30;
  const comp=off.createDynamicsCompressor();comp.threshold.value=-18;comp.knee.value=14;comp.ratio.value=3;comp.attack.value=.012;comp.release.value=.22;
@@ -216,11 +220,14 @@ async function renderWav(){
  const wet=off.createGain();wet.gain.value=+$('space').value/100*.12;
  master.connect(comp);comp.connect(off.destination);master.connect(delay);delay.connect(fb);fb.connect(delay);delay.connect(wet);wet.connect(comp);
  const p=current(),beat=60/(+$('bpm').value),int=+$('intensity').value/100,kinds=p.kinds||[p.kind],scale=p.scale.length?p.scale:[0,3,5,7,10];
- function tone(freq,t,d,w,a,pan=0,cutoff=3000,detune=0){
+ function tone(freq,t,d,w,a,pan=0,cutoff=3000,detune=0,warm=false){
   const o=off.createOscillator(),f=off.createBiquadFilter(),g=off.createGain(),st=off.createStereoPanner();
   o.type=w;o.frequency.setValueAtTime(freq,t);o.detune.value=detune;f.type='lowpass';f.frequency.value=cutoff;st.pan.value=pan;
+  // Small, slow pitch movement plus a quiet octave partial softens the artificial lead tone.
+  const lfo=off.createOscillator(),lg=off.createGain();lfo.frequency.value=4.6;lg.gain.value=warm?2.2:0;lfo.connect(lg);lg.connect(o.frequency);lfo.start(t);lfo.stop(Math.min(seconds,t+d+.02));
   g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(Math.max(.0002,a),t+Math.min(.12,d*.3));g.gain.setValueAtTime(Math.max(.0002,a*.7),Math.max(t+.02,t+d*.65));g.gain.exponentialRampToValueAtTime(.0001,Math.min(seconds,t+d));
   o.connect(f);f.connect(g);g.connect(st);st.connect(master);o.start(t);o.stop(Math.min(seconds,t+d+.03));
+  if(warm){const h=off.createOscillator(),hf=off.createBiquadFilter(),hg=off.createGain();h.type='sine';h.frequency.setValueAtTime(freq*2,t);hf.type='lowpass';hf.frequency.value=Math.min(2100,cutoff*1.25);hg.gain.setValueAtTime(.0001,t);hg.gain.linearRampToValueAtTime(Math.max(.0001,a*.12),t+Math.min(.12,d*.3));hg.gain.exponentialRampToValueAtTime(.0001,Math.min(seconds,t+d));h.connect(hf);hf.connect(hg);hg.connect(st);h.start(t);h.stop(Math.min(seconds,t+d+.03));}
  }
  function sampled(category,t,rate=1,gain=1){const list=sampleBuffers[category];if(!list||!list.length)return false;const src=off.createBufferSource(),g=off.createGain();src.buffer=list[Math.floor(Math.random()*list.length)];src.playbackRate.setValueAtTime(Math.max(.25,Math.min(3,rate)),t);g.gain.setValueAtTime(Math.max(.01,gain)*int,t);src.connect(g);g.connect(master);src.start(t);return true;}
  function hit(t,d,a,cut=2500){
@@ -245,7 +252,7 @@ async function renderWav(){
    const t=bs+i*beat/2;if(t>=seconds)continue;
    if(trackOn('trackDrums')&&trackOn('trackBass')&&((dance&&i%2===0)||(heavy&&(i===0||i===4)))){if(!sampled('kick',t,1,i===0?1:.7))bass(t,i===0?1:.7);}
    if(trackOn('trackDrums')&&(i===2||i===6)){if(heavy||kinds.includes('break')){if(!sampled('snare',t,1,.8))hit(t,.10,.060,650)}else if(dance){if(!sampled('snare',t,1,.65))hit(t,.065,.035,1100)}}
-   if(trackOn('trackDrums')&&(dance||heavy||kinds.some(k=>['hiphop','break','jazz','tribal'].includes(k)))&&i%2===1){if(!sampled('hat',t,1,ambient?.12:.24))hit(t,.045,ambient?.003:.005,1900);}
+   if(trackOn('trackDrums')&&(dance||heavy||kinds.some(k=>['hiphop','break','jazz','tribal'].includes(k)))&&i%2===1){if(!sampled('hat',t,1,ambient?.12:.24))hit(t,.045,ambient?.0025:.0038,1750);}
    const motifs=[
     [{step:0,n:0,len:1.45,v:1.00},{step:2,n:2,len:.72,v:.72},{step:4,n:1,len:.88,v:.78},{step:6,n:3,len:1.55,v:1.05}],
     [{step:0,n:2,len:1.00,v:.86},{step:3,n:4,len:.72,v:.74},{step:5,n:3,len:.70,v:.78},{step:7,n:1,len:1.35,v:.92}],
@@ -253,7 +260,7 @@ async function renderWav(){
     [{step:0,n:0,len:1.00,v:.92},{step:2,n:2,len:.78,v:.76},{step:5,n:4,len:1.00,v:.90}]
    ];
    const note=motifs[bar%motifs.length].find(x=>x.step===i);
-   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.58))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.58)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'sine',.033*int*note.v,Math.sin(i+bar)*.07,heavy?950:1250,0)}
+   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.58))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.58)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'sine',(heavy||dance?.060:.055)*int*note.v,Math.sin(i+bar)*.07,heavy?820:1450,0,true)}
   }
  }
  // Fade in/out avoids clicks at file boundaries.
