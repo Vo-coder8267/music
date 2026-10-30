@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100c16">
-<title>Музыкальная алхимия — v12, громче ведущая мелодия</title>
+<title>Музыкальная алхимия — v13, громче ведущая мелодия</title>
 <style>
 :root{color-scheme:dark;--bg:#100d15;--panel:#1b1522;--line:#45334f;--text:#f6effa;--muted:#b8a8c5;--gold:#e5c184;--violet:#b29af7;--green:#9bdab5}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0,#3b2348 0,transparent 40%),var(--bg);color:var(--text);font:15px/1.5 system-ui,Segoe UI,sans-serif}
@@ -12,7 +12,7 @@ main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{d
 @media(max-width:800px){.grid{grid-template-columns:1fr}.panel{padding:15px}.art{height:175px}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head>
 <body>
-<header><div class="brand"><div class="sigil">✶</div><div><h1>Музыкальная алхимия</h1><p>Бесплатная лаборатория жанров</p></div></div><span class="stamp">v12 · 0 ₽ · без API-ключа</span></header>
+<header><div class="brand"><div class="sigil">✶</div><div><h1>Музыкальная алхимия</h1><p>Бесплатная лаборатория жанров</p></div></div><span class="stamp">v13 · 0 ₽ · без API-ключа</span></header>
 <main><div class="grid"><section>
 <div class="panel"><h2>Ⅰ. Ингредиенты</h2><p class="sub">Вводи любой жанр или сочетание. Можно вводить любые названия. Незнакомый жанр не будет случайно менять гамму: он добавится как мягкая нейтральная основа, пока не появится отдельный звуковой профиль.</p>
 <div class="row"><input id="genreInput" placeholder="Pagan Folk, Dark Jazz…" aria-label="Жанры"><button class="btn primary" id="add">Добавить</button></div>
@@ -27,7 +27,7 @@ main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{d
 <div class="divider"></div><div class="actions"><button class="btn primary" id="play">▶ Слушать эскиз</button><button class="btn" id="stop">■ Стоп</button><button class="btn gold" id="wav">↓ Скачать WAV</button></div>
 <div class="divider"></div><h2>Ⅲ. Микшер отдельных партий</h2><p class="sub">Отключай и включай партии отдельно. Настройки применяются сразу: уже запланированные звуки останавливаются, эскиз перезапускается с текущими партиями.</p><div class="track-grid" id="trackMixer"><label class="track"><input type="checkbox" id="trackMelody" checked> Мелодия</label><label class="track"><input type="checkbox" id="trackHarmony" checked> Гармония</label><label class="track"><input type="checkbox" id="trackDrums" checked> Ударные</label><label class="track"><input type="checkbox" id="trackBass" checked> Бас</label><label class="track"><input type="checkbox" id="trackAcoustic" checked> Живые тембры</label><label class="track"><input type="checkbox" id="trackElectronic" checked> Электроника</label></div><div class="actions" style="margin-top:10px"><button class="btn small" id="soloMelody">Соло: мелодия</button><button class="btn small" id="allTracks">Все партии</button></div><div class="divider"></div><h2>Звуки инструментов (необязательно)</h2><p class="sub">Загрузи собственные WAV/OGG-сэмплы. Назови файлы по инструменту: kick, snare, hat, crash, guitar, bass, violin, cello, strings, flute, piano или brass. Звуки остаются в памяти вкладки и не отправляются на сервер.</p><label>Записанная гитара для рок-мелодии</label><div class="actions"><button class="btn gold" id="loadRealGuitar">♫ Загрузить бесплатные записи гитары</button></div><div class="status" id="realGuitarStatus">Сэмплы загружаются только по нажатию кнопки; нужно подключение к интернету. Лицензия CC0. Источник: Meta Open Sound.</div><label for="sampleFiles">Или добавить собственные аудиосэмплы</label><input id="sampleFiles" type="file" accept="audio/*,.wav,.ogg,.mp3,.flac" multiple><div class="status" id="sampleStatus">Пока используются встроенные звуки. Добавь сэмплы, чтобы услышать их в эскизе и WAV.</div>
 <div class="status" id="synthStatus">Бесплатный браузерный синтез: рок-модель: гитарные атаки, басовый щипок и прямой роковый ритм.</div>
-<div class="note"><b>Что изменилось в v12:</b> можно загрузить реальные записи стальной акустической гитары из бесплатной библиотеки Meta Open Sound (CC0). Это именно акустическая, а не перегруженная электрогитара: на первом этапе она позволит проверить, насколько меньше роботизации будет в ведущей мелодии. Если записи загружены, ведущая рок-мелодия и гитарный рифф берутся из них вместо синтезированного гитарного тона. Бас и ударные пока остаются синтезированными, если не загрузить свои сэмплы. Для загрузки нужен интернет. В v12 ведущая мелодия сделана примерно на 30% громче отдельно от остального микса.</div></div>
+<div class="note"><b>Что изменилось в v13:</b> можно загрузить реальные записи стальной акустической гитары из бесплатной библиотеки Meta Open Sound (CC0). Это именно акустическая, а не перегруженная электрогитара: на первом этапе она позволит проверить, насколько меньше роботизации будет в ведущей мелодии. Если записи загружены, ведущая рок-мелодия и гитарный рифф берутся из них вместо синтезированного гитарного тона. Бас и ударные пока остаются синтезированными, если не загрузить свои сэмплы. Для загрузки нужен интернет. В v13 ведущая мелодия сделана примерно на 30% громче отдельно от остального микса.</div></div>
 <div class="panel"><h2>Ⅲ. Сохранённые формулы</h2><p class="sub">Сохраняются только в этом браузере на этом устройстве.</p><div class="actions"><button class="btn" id="save">✦ Сохранить смесь</button><button class="btn small" id="clear">Очистить</button></div><div id="saved" class="savedlist"></div></div>
 </section><section>
 <div class="panel"><h2>Звуковая лаборатория</h2><p class="sub">Алхимический знак отражает выбранное сочетание.</p><div class="art" id="art"><div class="orbit"></div><div class="rune" id="rune">✧</div></div><div class="bars" id="bars"></div><strong id="title">Неизвестная формула</strong><div class="status" id="desc">Добавь жанр и нажми «Слушать эскиз».</div>
@@ -39,10 +39,10 @@ main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{d
 <div class="note"><b>Ноль обязательных расходов:</b> сайт, синтез и экспорт работают без API-ключа. Для AI используется общедоступная демонстрация, доступность которой не гарантируется. Для локального запуска AI можно отдельно установить открытую модель; её лицензия может ограничивать коммерческое использование.</div>
 <div class="divider"></div><h2>Библиотека стилей</h2><p class="sub">Нажми стиль, чтобы собрать и услышать отдельный эскиз.</p><div class="presets" id="library">
 <button class="btn" data-g="Rock">Rock</button><button class="btn" data-g="Punk Rock">Punk Rock</button><button class="btn" data-g="Alternative Rock">Alternative Rock</button><button class="btn" data-g="Pagan Folk">Pagan Folk</button><button class="btn" data-g="Bebop">Bebop</button><button class="btn" data-g="Delta Blues">Delta Blues</button><button class="btn" data-g="Black Metal">Black Metal</button><button class="btn" data-g="Deep House">Deep House</button><button class="btn" data-g="Industrial Techno">Industrial Techno</button><button class="btn" data-g="Dark Ambient">Dark Ambient</button><button class="btn" data-g="Boom Bap">Boom Bap</button><button class="btn" data-g="Jazz Fusion">Jazz Fusion</button><button class="btn" data-g="Breakcore">Breakcore</button><button class="btn" data-g="Neoclassical">Neoclassical</button><button class="btn" data-g="Harsh Noise">Harsh Noise</button><button class="btn" data-g="Drift Phonk">Drift Phonk</button><button class="btn" data-g="Indie Folk">Indie Folk</button><button class="btn" data-g="Cinematic">Cinematic</button><button class="btn" data-g="Trap">Trap</button></div>
-</div></section></div><div class="footer">Музыкальная алхимия v12 · гитарные сэмплы CC0 + браузерный синтез · локальный экспорт WAV · 0 ₽</div></main>
+</div></section></div><div class="footer">Музыкальная алхимия v13 · гитарные сэмплы CC0 + браузерный синтез · локальный экспорт WAV · 0 ₽</div></main>
 <script>
 (()=>{'use strict';
-const $=id=>document.getElementById(id);let genres=[],ctx=null,master=null,delay=null,feedback=null,nodes=[],timer=null,playing=false;
+const $=id=>document.getElementById(id);let genres=[],ctx=null,master=null,delay=null,feedback=null,nodes=[],timer=null,playing=false,phraseBar=0;
 const sampleBuffers={}; let sampleNames=[]; const realGuitarSamples=[]; let realGuitarLoading=false;
 const trackOn=id=>$(id).checked;
 const prof={
@@ -189,7 +189,7 @@ const REAL_GUITAR_SET=[
  {midi:67,name:'G4',file:'INSGuitarSteel_StringHighE_Vel02_G4_01.ogg'},
  {midi:72,name:'C5',file:'INSGuitarSteel_StringG_Vel02_C5_01.ogg'}
 ];
-async function loadRealGuitar(){if(realGuitarSamples.length===REAL_GUITAR_SET.length){$('realGuitarStatus').textContent='Гитарные записи уже загружены: 8 нот. В рок-мелодии синтезированный ведущий звук заменён сэмплами.';return;}if(realGuitarLoading)return;realGuitarLoading=true;$('loadRealGuitar').disabled=true;$('realGuitarStatus').textContent='Загружаю 8 гитарных нот из Meta Open Sound…';try{ensure();await ctx.resume();for(const item of REAL_GUITAR_SET){if(realGuitarSamples.some(x=>x.midi===item.midi))continue;const url='https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/main/systems/instruments/meta-steel-guitar/ogg/'+item.file;const response=await fetch(url);if(!response.ok)throw new Error('HTTP '+response.status+' при загрузке '+item.file);const buf=await ctx.decodeAudioData(await response.arrayBuffer());realGuitarSamples.push({midi:item.midi,buffer:buf,name:item.name});}realGuitarSamples.sort((a,b)=>a.midi-b.midi);$('realGuitarStatus').textContent='Готово: загружены реальные записи стальной акустической гитары ('+realGuitarSamples.length+' нот, CC0). Для рок-мелодии используется ближайшая записанная нота с умеренным изменением высоты.';$('synthStatus').textContent='Версия 12: микшер перезапускает звук сразу после изменения партии; реальные гитарные записи используются, если они загружены.';}catch(err){$('realGuitarStatus').textContent='Не удалось загрузить гитарные записи. Проверь интернет и нажми кнопку ещё раз. Ошибка: '+err.message;}finally{realGuitarLoading=false;$('loadRealGuitar').disabled=false;}}
+async function loadRealGuitar(){if(realGuitarSamples.length===REAL_GUITAR_SET.length){$('realGuitarStatus').textContent='Гитарные записи уже загружены: 8 нот. В рок-мелодии синтезированный ведущий звук заменён сэмплами.';return;}if(realGuitarLoading)return;realGuitarLoading=true;$('loadRealGuitar').disabled=true;$('realGuitarStatus').textContent='Загружаю 8 гитарных нот из Meta Open Sound…';try{ensure();await ctx.resume();for(const item of REAL_GUITAR_SET){if(realGuitarSamples.some(x=>x.midi===item.midi))continue;const url='https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/main/systems/instruments/meta-steel-guitar/ogg/'+item.file;const response=await fetch(url);if(!response.ok)throw new Error('HTTP '+response.status+' при загрузке '+item.file);const buf=await ctx.decodeAudioData(await response.arrayBuffer());realGuitarSamples.push({midi:item.midi,buffer:buf,name:item.name});}realGuitarSamples.sort((a,b)=>a.midi-b.midi);$('realGuitarStatus').textContent='Готово: загружены реальные записи стальной акустической гитары ('+realGuitarSamples.length+' нот, CC0). Для рок-мелодии используется ближайшая записанная нота с умеренным изменением высоты.';$('synthStatus').textContent='Версия 13: микшер перезапускает звук сразу после изменения партии; реальные гитарные записи используются, если они загружены.';}catch(err){$('realGuitarStatus').textContent='Не удалось загрузить гитарные записи. Проверь интернет и нажми кнопку ещё раз. Ошибка: '+err.message;}finally{realGuitarLoading=false;$('loadRealGuitar').disabled=false;}}
 $('loadRealGuitar').addEventListener('click',loadRealGuitar);
 function nearestRealGuitar(freq){if(!realGuitarSamples.length)return null;const midi=69+12*Math.log2(freq/440);let best=realGuitarSamples[0];for(const x of realGuitarSamples)if(Math.abs(x.midi-midi)<Math.abs(best.midi-midi))best=x;return {buffer:best.buffer,rate:Math.max(.5,Math.min(2,Math.pow(2,(midi-best.midi)/12)))};}
 function triggerRealGuitar(t,freq,gain=0.6,targetCtx=ctx,targetMaster=master,offline=false){const pick=nearestRealGuitar(freq);if(!pick)return false;const src=targetCtx.createBufferSource(),g=targetCtx.createGain();src.buffer=pick.buffer;src.playbackRate.setValueAtTime(pick.rate,t);g.gain.setValueAtTime(Math.max(.001,gain)*(+$('intensity').value/100),t);src.connect(g);g.connect(targetMaster);src.start(t);if(!offline)nodes.push(src);return true;}
@@ -198,6 +198,7 @@ function schedule(){
  if(!playing)return;ensure();
  const p=current(),now=ctx.currentTime+.06,beat=60/(+$('bpm').value),int=+$('intensity').value/100;
  const kinds=p.kinds||[p.kind],scale=p.scale.length?p.scale:[0,3,5,7,10];
+ const cycleStart=phraseBar;
  const heavy=kinds.some(k=>['heavy','blast'].includes(k))||/metal|industrial|hardcore/i.test(genres.join(' '));
  const genreText=genres.join(' ').toLowerCase(),orchestral=/orchestral|symphonic|classical|cinematic|neoclassical|оркестр|симфон|классическ/.test(genreText),folk=/folk|pagan|medieval|celtic|фолк|народн|средневек/.test(genreText),electronic=/electro|techno|house|trance|industrial|synth|edm|электрон|техно/.test(genreText);
  const rock=/rock|punk|grunge/.test(genreText)||kinds.includes('rock');
@@ -209,7 +210,7 @@ function schedule(){
   if(bar%2===0||!ambient){
    // Четырёхтактовая гармоническая дуга: тоника → более светлая опора → напряжение → возвращение.
    const progression=[0, Math.max(0,scale.length-1), Math.min(2,scale.length-1), Math.min(1,scale.length-1)];
-   const degree=progression[bar%progression.length];
+   const degree=progression[(cycleStart+bar)%progression.length];
    const root=scale[degree];
    const chord=[root,scale[(degree+2)%scale.length]??7,scale[(degree+4)%scale.length]??10];
    if(trackOn('trackAcoustic')&&(orchestral||folk)){const f=folk?523.25:110;if(!triggerSample(folk?'flute':'strings',barStart,1,Math.min(.8,beat*3))){osc(f,barStart,Math.min(beat*3.2,3.2),'sine',.018*int,{cutoff:orchestral?1600:2600,attack:Math.min(.65,beat*1.2),pan:folk?.22:-.28});if(orchestral)osc(f*1.5,barStart+.025,Math.min(beat*3,3),'triangle',.012*int,{cutoff:2200,attack:.45,pan:.28});}}if(trackOn('trackElectronic')&&electronic)osc(55,barStart,Math.min(beat*1.6,1.6),'sine',.0025*int,{cutoff:heavy?240:300,attack:.18,pan:0});if(trackOn('trackHarmony'))chord.forEach((semi,j)=>{
@@ -238,22 +239,24 @@ function schedule(){
     [{step:1,n:1,len:.88,v:.72},{step:3,n:3,len:.92,v:.88},{step:5,n:4,len:.70,v:.82},{step:7,n:2,len:1.25,v:1.00}],
     [{step:0,n:0,len:1.00,v:.92},{step:2,n:2,len:.78,v:.76},{step:5,n:4,len:1.00,v:.90}]
    ];
-   const motif=motifs[bar%motifs.length], note=motif.find(x=>x.step===i);
+   const motif=motifs[(cycleStart+bar)%motifs.length], note=motif.find(x=>x.step===i);
    if(trackOn('trackMelody')&&note){
-    const ix=note.n%scale.length, octave=(bar%4===2&&note.n>=3)?12:0;
+    const ix=note.n%scale.length, octave=((cycleStart+bar)%4===2&&note.n>=3)?12:0;
     const semi=scale[ix]+octave, f=146.83*Math.pow(2,semi/12), phraseEnd=note.len>1.2;
     const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');
     if(rock&&trackOn('trackAcoustic')&&realGuitarSamples.length){triggerRealGuitar(t,f,.62*note.v);}
     else if(rock&&trackOn('trackAcoustic')&&sampleBuffers.guitar&&sampleBuffers.guitar.length){triggerSample('guitar',t,f/130.81,.60*note.v);}
+    else if(rock&&trackOn('trackAcoustic')){rockGuitar(t,f,Math.min(beat*note.len,1.8),.78,Math.sin(i+cycleStart+bar)*.08);}
     else if(!(trackOn('trackAcoustic')&&triggerSample(melodicSample,t,f/130.81,.48))&&!(trackOn('trackAcoustic')&&triggerSample('guitar',t,f/130.81,.48)))
-      osc(f,t,Math.min(beat*note.len,2.0), 'sine',(heavy||dance?.075:.068)*int*note.v,{cutoff:heavy?820:1250,detune:0,pan:Math.sin(i+bar)*.07,attack:phraseEnd?.26:.14,vibrato:heavy?1.8:2.6,warm:true});
+      osc(f,t,Math.min(beat*note.len,2.0), 'sine',(heavy||dance?.075:.068)*int*note.v,{cutoff:heavy?820:1250,detune:0,pan:Math.sin(i+cycleStart+bar)*.07,attack:phraseEnd?.26:.14,vibrato:heavy?1.8:2.6,warm:true});
    }
    if((kinds.includes('noise')||/noise/i.test(genres.join(' ')))&&i%4===2)noise(t,.18,.12,450);
   }
  }
+ phraseBar=cycleStart+2;
  timer=setTimeout(schedule,beat*8000);
 }
-async function play(){if(playing){stop()}ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent=realGuitarSamples.length?'Версия 12: ведущая рок-мелодия звучит реальными гитарными записями; бас и ударные пока синтезированы.':'Версия 12: если реальные гитарные записи не загружены, рок-тембр остаётся синтезированным. Нажми «Загрузить бесплатные записи гитары», чтобы заменить его записями.';schedule();}
+async function play(){if(playing){stop()}phraseBar=0;ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent=realGuitarSamples.length?'Версия 13: ведущая рок-мелодия звучит реальными гитарными записями; бас и ударные пока синтезированы.':'Версия 13: если реальные гитарные записи не загружены, рок-тембр остаётся синтезированным. Нажми «Загрузить бесплатные записи гитары», чтобы заменить его записями.';schedule();}
 function stop(){playing=false;clearTimeout(timer);nodes.forEach(n=>{try{n.stop()}catch(e){}});nodes=[];$('art').classList.remove('playing');}
 function applyMixerImmediately(){if(!playing)return;stop();play();}
 const mixerIds=['trackMelody','trackHarmony','trackDrums','trackBass','trackAcoustic','trackElectronic'];
@@ -261,7 +264,7 @@ mixerIds.forEach(id=>$(id).addEventListener('change',applyMixerImmediately));
 $('play').onclick=play;$('stop').onclick=()=>{stop();$('synthStatus').textContent='Остановлено.'};$('rune').textContent='✧';
 $('bars').innerHTML=Array.from({length:31},()=>'<i></i>').join('');
 async function renderWav(){
- stop();$('synthStatus').textContent='Создаю WAV v12: учитываю актуальные переключатели микшера и загруженные гитарные записи…';
+ stop();$('synthStatus').textContent='Создаю WAV v13: учитываю актуальные переключатели микшера и загруженные гитарные записи…';
  const sr=24000,seconds=16,frames=sr*seconds,off=new OfflineAudioContext(2,frames,sr);
  const master=off.createGain();master.gain.value=+$('volume').value/100*.30;
  const comp=off.createDynamicsCompressor();comp.threshold.value=-18;comp.knee.value=14;comp.ratio.value=3;comp.attack.value=.012;comp.release.value=.22;
@@ -321,7 +324,7 @@ async function renderWav(){
     [{step:0,n:0,len:1.00,v:.92},{step:2,n:2,len:.78,v:.76},{step:5,n:4,len:1.00,v:.90}]
    ];
    const note=motifs[bar%motifs.length].find(x=>x.step===i);
-   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if(rock&&trackOn('trackAcoustic')&&realGuitarSamples.length){sampledRealGuitar(t,f,.62*note.v)}else if(rock&&trackOn('trackAcoustic')&&sampleBuffers.guitar&&sampleBuffers.guitar.length){sampled('guitar',t,f/130.81,.60*note.v)}else if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.48))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.48)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'sine',(heavy||dance?.075:.068)*int*note.v,Math.sin(i+bar)*.07,heavy?820:(folk?1500:1250),0,true,true)}
+   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if(rock&&trackOn('trackAcoustic')&&realGuitarSamples.length){sampledRealGuitar(t,f,.62*note.v)}else if(rock&&trackOn('trackAcoustic')&&sampleBuffers.guitar&&sampleBuffers.guitar.length){sampled('guitar',t,f/130.81,.60*note.v)}else if(rock&&trackOn('trackAcoustic')){rockGuitarTone(t,f,Math.min(beat*note.len,1.8,seconds-t),.78,Math.sin(i+bar)*.08)}else if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.48))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.48)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'sine',(heavy||dance?.075:.068)*int*note.v,Math.sin(i+bar)*.07,heavy?820:(folk?1500:1250),0,true,true)}
   }
  }
  // Fade in/out avoids clicks at file boundaries.
