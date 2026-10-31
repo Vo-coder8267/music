@@ -11,14 +11,14 @@ header{padding:26px clamp(16px,4vw,48px);border-bottom:1px solid #33263c;display
 main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{display:grid;grid-template-columns:minmax(280px,.95fr) minmax(320px,1.05fr);gap:18px;align-items:start}.panel{background:linear-gradient(145deg,#1d1725,#15111b);border:1px solid var(--line);border-radius:16px;padding:19px;margin-bottom:16px;min-width:0;box-shadow:0 12px 40px #0002}h2{font-size:18px;margin:0 0 4px}.sub{font-size:13px;color:var(--muted);margin:0 0 15px}label{display:block;color:#e0d4e8;font-size:13px;margin:12px 0 6px}input,textarea,select{width:100%;border:1px solid #4c3958;border-radius:10px;background:#100d16;color:var(--text);font:inherit;padding:10px 12px}textarea{min-height:82px;resize:vertical}input:focus,textarea:focus,select:focus{outline:2px solid #8f70c6}input[type=range]{padding:0;border:0;accent-color:var(--violet)}.row{display:flex;gap:8px}.row input{min-width:0}.btn{background:#2c2237;border:1px solid #604a70;color:var(--text);border-radius:10px;padding:10px 13px;font:inherit;font-weight:650;cursor:pointer}.btn:hover{filter:brightness(1.15)}.primary{background:linear-gradient(120deg,#7958a1,#4c3767);border-color:#9c7bb9}.gold{background:#3c2e1d;border-color:#8c7045;color:#f4dba9}.small{padding:6px 9px;font-size:12px}.presets,.chips,.actions{display:flex;flex-wrap:wrap;gap:7px}.presets{margin:12px 0}.presets .btn{font-size:12px;padding:7px 9px}.chip{background:#2b2035;border:1px solid #634b72;border-radius:999px;padding:5px 9px;font-size:13px;display:flex;gap:7px;align-items:center}.chip button{background:none;border:0;color:#eadcf3;cursor:pointer;font-size:16px}.rangehead{display:flex;justify-content:space-between;gap:10px}.rangehead output{color:var(--gold);font-size:13px}.divider{height:1px;background:#392a43;margin:17px 0}.art{height:205px;border:1px solid #493454;border-radius:13px;background:radial-gradient(ellipse at center,#573a71 0,#292038 40%,#100d16 78%);display:grid;place-items:center;position:relative;overflow:hidden;margin:13px 0}.orbit{display:none}.orbit:before,.orbit:after{content:"";position:absolute;inset:19px;border:1px solid #b29af780;border-radius:50%}.orbit:after{inset:43px;border-color:#e5c18480}.rune{font-size:60px;color:#f1d9a4;text-shadow:0 0 25px #b29af7;z-index:1}@keyframes spin{to{transform:rotate(360deg)}}.bars{display:flex;align-items:center;justify-content:center;gap:4px;height:35px}.bars i{height:7px;width:4px;border-radius:5px;background:linear-gradient(var(--gold),var(--violet))}.playing .bars i{height:18px}.status{font-size:12px;color:var(--muted);min-height:18px;margin-top:7px}.mixrow{display:grid;grid-template-columns:1fr 100px 34px;align-items:center;gap:8px;margin:10px 0}.mixrow label{margin:0}.mixrow output{color:var(--gold);font-size:12px;text-align:right}.note{border-left:3px solid var(--gold);background:#241c2d;padding:10px 12px;border-radius:7px;color:#d9cde2;font-size:12px;margin-top:13px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.savedlist{display:grid;gap:8px;margin-top:12px}.saved{border:1px solid #3e2e49;border-radius:10px;padding:9px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px}.saved span{overflow-wrap:anywhere}.track-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.track{display:flex;align-items:center;gap:8px;margin:0;padding:9px 10px;border:1px solid #493653;border-radius:9px;background:#17111d}.track input{width:auto;accent-color:var(--violet)}.audio{width:100%;margin-top:12px}.footer{text-align:center;color:#8d7e99;font-size:12px;padding:5px 15px 25px}
 @media(max-width:800px){.grid{grid-template-columns:1fr}.panel{padding:15px}.art{height:120px}}
 
-/* v14: sound-first workspace; v15: genre profiles; v16: phrase development; v17: continuous playback; v18: Tone.js instrument prototype */
+/* v14: sound-first workspace; v15: genre profiles; v16: phrase development; v17: continuous playback; v19: Tone.js sample playback prototype */
 #library { display:none !important; }
 #prompt, label[for="prompt"], #length, #vocal, #openAI, #copyPrompt, #aiStatus { display:none !important; }
 .two:has(#length) { display:none !important; }
 
 </style></head>
 <body>
-<header><div class="brand"><div class="sigil">✶</div><div><h1>Музыкальная алхимия</h1><p>Бесплатная лаборатория жанров</p></div></div><span class="stamp">v18 · Tone.js · эксперимент инструментов · 0 ₽</span></header>
+<header><div class="brand"><div class="sigil">✶</div><div><h1>Музыкальная алхимия</h1><p>Бесплатная лаборатория жанров</p></div></div><span class="stamp">v19 · Tone.js · реальные аудиозаписи · 0 ₽</span></header>
 <main><div class="grid"><section>
 <div class="panel"><h2>Ⅰ. Ингредиенты</h2><p class="sub">Вводи любой жанр или сочетание. Можно вводить любые названия. Незнакомый жанр не будет случайно менять гамму: он добавится как мягкая нейтральная основа, пока не появится отдельный звуковой профиль.</p>
 <div class="row"><input id="genreInput" placeholder="Pagan Folk, Dark Jazz…" aria-label="Жанры"><button class="btn primary" id="add">Добавить</button></div>
@@ -33,7 +33,22 @@ main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{d
 <div class="divider"></div><div class="actions"><button class="btn primary" id="play">▶ Слушать эскиз</button><button class="btn" id="stop">■ Стоп</button><button class="btn gold" id="wav">↓ Скачать WAV</button></div>
 <div class="divider"></div><h2>Ⅲ. Микшер отдельных партий</h2><p class="sub">Отключай и включай партии отдельно. Настройки применяются сразу: уже запланированные звуки останавливаются, эскиз перезапускается с текущими партиями.</p><div class="track-grid" id="trackMixer"><label class="track"><input type="checkbox" id="trackMelody" checked> Мелодия</label><label class="track"><input type="checkbox" id="trackHarmony" checked> Гармония</label><label class="track"><input type="checkbox" id="trackDrums" checked> Ударные</label><label class="track"><input type="checkbox" id="trackBass" checked> Бас</label><label class="track"><input type="checkbox" id="trackAcoustic" checked> Живые тембры</label><label class="track"><input type="checkbox" id="trackElectronic" checked> Электроника</label></div><div class="actions" style="margin-top:10px"><button class="btn small" id="soloMelody">Соло: мелодия</button><button class="btn small" id="allTracks">Все партии</button></div><div class="divider"></div><h2>Звуки инструментов (необязательно)</h2><p class="sub">Загрузи собственные WAV/OGG-сэмплы. Назови файлы по инструменту: kick, snare, hat, crash, guitar, bass, violin, cello, strings, flute, piano или brass. Звуки остаются в памяти вкладки и не отправляются на сервер.</p><label>Записанная гитара для рок-мелодии</label><div class="actions"><button class="btn gold" id="loadRealGuitar">♫ Загрузить бесплатные записи гитары</button></div><div class="status" id="realGuitarStatus">Сэмплы загружаются только по нажатию кнопки; нужно подключение к интернету. Лицензия CC0. Источник: Meta Open Sound.</div><label for="sampleFiles">Или добавить собственные аудиосэмплы</label><input id="sampleFiles" type="file" accept="audio/*,.wav,.ogg,.mp3,.flac" multiple><div class="status" id="sampleStatus">Пока используются встроенные звуки. Добавь сэмплы, чтобы услышать их в эскизе и WAV.</div>
 <div class="status" id="synthStatus">Бесплатный браузерный синтез: рок-модель: гитарные атаки, басовый щипок и прямой роковый ритм.</div>
-<div class="divider"></div><h2>Экспериментальная инструментальная система Tone.js</h2><p class="sub">Отдельная тестовая сцена. Она не заменяет проверенный движок v17: можно сравнить новый способ воспроизведения, не теряя прежний.</p><div class="actions"><button class="btn primary" id="tonePlay">♫ Проверить инструменты Tone.js</button><button class="btn" id="toneStop">■ Остановить Tone.js</button></div><div class="status" id="toneStatus">Tone.js загружается из бесплатной библиотеки. Для запуска нажми кнопку.</div><div class="note">Первый тест проверяет синхронизацию и отдельные партии. Встроенные PluckSynth / MembraneSynth / NoiseSynth всё ещё синтезируют звук — это не настоящие записи гитары и барабанов. Следующий шаг — подключить к Tone.js реальные сэмплы инструментов, в том числе уже загруженные тобой.</div>
+<div class="divider"></div><h2>Экспериментальная инструментальная система Tone.js</h2>
+<p class="sub">v19: Tone.js теперь воспроизводит загруженные записи инструментов. Это уже не сравнение двух синтезаторов: здесь можно услышать именно аудиозаписи.</p>
+<div class="note"><b>Важно:</b> для честного теста нужны аудиофайлы с реальными инструментами. Можно загрузить собственные записи или бесплатные сэмплы, на которые у тебя есть право использования. Файлы обрабатываются локально в браузере и никуда не отправляются.</div>
+<div class="two">
+ <div><label for="v19Guitar">Гитара — WAV/MP3/OGG</label><input id="v19Guitar" type="file" accept="audio/*"></div>
+ <div><label for="v19Bass">Бас-гитара — WAV/MP3/OGG</label><input id="v19Bass" type="file" accept="audio/*"></div>
+ <div><label for="v19Kick">Бочка — WAV/MP3/OGG</label><input id="v19Kick" type="file" accept="audio/*"></div>
+ <div><label for="v19Snare">Малый барабан — WAV/MP3/OGG</label><input id="v19Snare" type="file" accept="audio/*"></div>
+ <div><label for="v19Hat">Хай-хэт/тарелка — WAV/MP3/OGG</label><input id="v19Hat" type="file" accept="audio/*"></div>
+ <div><label for="v19Other">Дополнительный инструмент (необязательно)</label><input id="v19Other" type="file" accept="audio/*"></div>
+</div>
+<div class="status" id="v19SampleStatus">Пока реальные записи не загружены. Выбери хотя бы гитару и ударные, чтобы услышать разницу.</div>
+<div class="actions"><button class="btn primary" id="tonePlay">♫ Играть реальные записи через Tone.js</button><button class="btn" id="toneStop">■ Остановить Tone.js</button></div>
+<div class="status" id="toneStatus">Ожидаю загрузки записей инструментов.</div>
+<div class="note">Для гитары и баса лучше подходят отдельные чистые ноты или короткие риффы без длинной тишины. Для ударных — отдельные одиночные удары. На этом этапе один загруженный звук будет использоваться как исходный образец с транспонированием для разных нот; для более естественного результата позже добавим наборы записей по нотам и разным артикуляциям.</div>
+<p class="sub">Отдельная тестовая сцена. Она не заменяет проверенный движок v17: можно сравнить новый способ воспроизведения, не теряя прежний.</p><div class="actions"><button class="btn primary" id="tonePlay">♫ Проверить инструменты Tone.js</button><button class="btn" id="toneStop">■ Остановить Tone.js</button></div><div class="status" id="toneStatus">Tone.js загружается из бесплатной библиотеки. Для запуска нажми кнопку.</div><div class="note">Первый тест проверяет синхронизацию и отдельные партии. Встроенные PluckSynth / MembraneSynth / NoiseSynth всё ещё синтезируют звук — это не настоящие записи гитары и барабанов. Следующий шаг — подключить к Tone.js реальные сэмплы инструментов, в том числе уже загруженные тобой.</div>
 <div class="note"><b>Основа звука (унаследована от v13):</b> можно загрузить реальные записи стальной акустической гитары из бесплатной библиотеки Meta Open Sound (CC0). Это именно акустическая, а не перегруженная электрогитара: на первом этапе она позволит проверить, насколько меньше роботизации будет в ведущей мелодии. Если записи загружены, ведущая рок-мелодия и гитарный рифф берутся из них вместо синтезированного гитарного тона. Бас и ударные пока остаются синтезированными, если не загрузить свои сэмплы. Для загрузки нужен интернет. В v13 ведущая мелодия сделана примерно на 30% громче отдельно от остального микса.</div></div>
 <div class="panel"><h2>Ⅲ. Сохранённые формулы</h2><p class="sub">Сохраняются только в этом браузере на этом устройстве.</p><div class="actions"><button class="btn" id="save">✦ Сохранить смесь</button><button class="btn small" id="clear">Очистить</button></div><div id="saved" class="savedlist"></div></div>
 </section><section>
@@ -400,55 +415,141 @@ async function renderWav(){
  $('synthStatus').textContent='WAV сохранён: 16 секунд. Учтены переключатели микшера и новая огибающая мелодии. '+(Object.keys(sampleBuffers).length?'Использованы загруженные сэмплы там, где они подходят.':'Использованы встроенные синтезированные звуки.');
 }
 $('wav').onclick=renderWav;
-// v18: isolated Tone.js instrument bench. The v17 engine remains available as a safe comparison.
-let toneParts=[], toneStarted=false;
-async function toneStop(){
- try{if(window.Tone){Tone.getTransport().stop();Tone.getTransport().cancel();}}catch(e){}
- toneParts.forEach(x=>{try{x.dispose()}catch(e){}});toneParts=[];toneStarted=false;
- if($('toneStatus'))$('toneStatus').textContent='Тест Tone.js остановлен.';
+// v19: Tone.js playback of actual user-provided recordings (not built-in synth voices).
+const v19Files = {};
+const v19Samplers = {};
+const v19Players = {};
+let v19Parts = [];
+let v19Urls = [];
+let v19Ready = false;
+
+const v19Inputs = {
+  guitar: 'v19Guitar', bass: 'v19Bass',
+  kick: 'v19Kick', snare: 'v19Snare',
+  hat: 'v19Hat', other: 'v19Other'
+};
+
+Object.entries(v19Inputs).forEach(([key,id])=>{
+  const el=$(id);
+  if(!el) return;
+  el.addEventListener('change',()=>{
+    const file=el.files && el.files[0];
+    if(!file) return;
+    v19Files[key]=file;
+    $('v19SampleStatus').textContent =
+      Object.entries(v19Files).map(([k,f])=>k+': '+f.name).join(' · ');
+    v19Ready=false;
+  });
+});
+
+async function v19Stop(){
+  try{
+    if(window.Tone){
+      Tone.getTransport().stop();
+      Tone.getTransport().cancel();
+    }
+  }catch(e){}
+  v19Parts.forEach(x=>{try{x.dispose()}catch(e){}});
+  v19Parts=[];
+  Object.values(v19Samplers).forEach(x=>{try{x.dispose()}catch(e){}});
+  Object.values(v19Players).forEach(x=>{try{x.dispose()}catch(e){}});
+  Object.keys(v19Samplers).forEach(k=>delete v19Samplers[k]);
+  Object.keys(v19Players).forEach(k=>delete v19Players[k]);
+  v19Urls.forEach(u=>{try{URL.revokeObjectURL(u)}catch(e){}});
+  v19Urls=[];
+  v19Ready=false;
 }
-async function tonePlay(){
- await toneStop();
- if(!window.Tone){$('toneStatus').textContent='Не удалось загрузить Tone.js. Проверь подключение к интернету и обнови страницу.';return;}
- try{
+
+async function v19Build(){
+  if(!window.Tone) throw new Error('Tone.js не загрузилась. Проверь интернет и обнови страницу.');
+  if(!Object.keys(v19Files).length) throw new Error('Сначала загрузи хотя бы один аудиофайл инструмента.');
   await Tone.start();
-  const bpm=Math.max(55,Math.min(180,+$('bpm').value||110));
-  Tone.getTransport().bpm.value=bpm;Tone.getTransport().timeSignature=4;Tone.getTransport().swing=.12;Tone.getTransport().swingSubdivision='8n';
-  const master=new Tone.Gain(Math.max(.05,(+$('volume').value||65)/100)*.55).toDestination();
-  const room=new Tone.Reverb({decay:1.7,wet:(+$('space').value||30)/250}).connect(master);
-  const guitar=new Tone.PluckSynth({attackNoise:.8,dampening:3200,resonance:.88}).connect(room);
-  const bass=new Tone.MonoSynth({oscillator:{type:'triangle'},filter:{Q:1.2,type:'lowpass',rolloff:-24},envelope:{attack:.012,decay:.18,sustain:.22,release:.22},filterEnvelope:{attack:.01,decay:.16,sustain:.18,release:.2,baseFrequency:75,octaves:2.2}}).connect(master);
-  const kick=new Tone.MembraneSynth({pitchDecay:.04,octaves:5,oscillator:{type:'sine'},envelope:{attack:.001,decay:.22,sustain:.01,release:.18}}).connect(master);
-  const snare=new Tone.NoiseSynth({noise:{type:'pink',playbackRate:1},envelope:{attack:.001,decay:.16,sustain:0}}).connect(room);
-  const hat=new Tone.MetalSynth({frequency:240, envelope:{attack:.001,decay:.055,release:.01},harmonicity:5.1, modulationIndex:24, resonance:3500, octaves:1.2}).connect(master);
-  toneParts=[master,room,guitar,bass,kick,snare,hat];
-  const isBlues=/blues/i.test(genres.join(' ')), isRock=/rock|metal|punk/i.test(genres.join(' '));
-  const notes=isBlues?['A3','C4','D4','Eb4','E4','G4']:['A3','C4','D4','E4','G4','A4'];
-  const chordRoots=['A2','F2','G2','E2'];
-  const groove=new Tone.Part((time,e)=>{
-   if(e.kind==='kick')kick.triggerAttackRelease('C1','8n',time, e.vel);
-   if(e.kind==='snare')snare.triggerAttackRelease('16n',time,e.vel);
-   if(e.kind==='hat')hat.triggerAttackRelease('32n',time,e.vel);
-   if(e.kind==='bass')bass.triggerAttackRelease(e.note,'8n',time,e.vel);
-   if(e.kind==='guitar')guitar.triggerAttackRelease(e.note,'8n',time,e.vel);
-  },[]);
+  await v19Stop();
+
+  const master = new Tone.Gain(Math.max(.03,(+$('volume').value||65)/100)*.58).toDestination();
+  const room = new Tone.Reverb({decay:1.35,wet:(+$('space').value||25)/300}).connect(master);
+  v19Parts.push(master,room);
+
+  for(const key of ['guitar','bass']){
+    if(!v19Files[key]) continue;
+    const url=URL.createObjectURL(v19Files[key]); v19Urls.push(url);
+    const sampler=new Tone.Sampler({urls:{C3:url},release:.8,curve:'exponential'}).connect(key==='guitar'?room:master);
+    v19Samplers[key]=sampler;
+  }
+  for(const key of ['kick','snare','hat','other']){
+    if(!v19Files[key]) continue;
+    const url=URL.createObjectURL(v19Files[key]); v19Urls.push(url);
+    const player=new Tone.Player({url,fadeOut:.015}).connect(key==='snare'||key==='other'?room:master);
+    v19Players[key]=player;
+  }
+  await Tone.loaded();
+  const bpm=Math.max(45,Math.min(190,+$('bpm').value||110));
+  Tone.getTransport().bpm.value=bpm;
+  Tone.getTransport().timeSignature=4;
+  Tone.getTransport().swing=.12;
+  Tone.getTransport().swingSubdivision='8n';
+
+  const isBlues=genres.some(g=>/blues/i.test(g));
+  const isRock=genres.some(g=>/rock|metal|punk/i.test(g));
+  const root=isBlues? 'A2':'E2';
+  const guitarNotes=isBlues?
+    ['A3','C4','D4','D#4','E4','G4','E4','D4']:
+    ['E3','G3','A3','B3','D4','B3','A3','G3'];
+  const bassNotes=isBlues?
+    ['A1','A1','D2','D2','E2','D2','A1','E2']:
+    ['E1','E1','G1','A1','E1','B1','A1','G1'];
+
   const events=[];
   for(let bar=0;bar<4;bar++){
-   for(let beat=0;beat<4;beat++){
-    if(beat===0||(!isBlues&&beat===2))events.push({time:`${bar}:${beat}:0`,kind:'kick',vel:.72});
-    if(beat===1||beat===3)events.push({time:`${bar}:${beat}:0`,kind:'snare',vel:.38});
-    for(let eighth=0;eighth<2;eighth++)events.push({time:`${bar}:${beat}:${eighth?2:0}`,kind:'hat',vel:eighth?.18:.28});
-    if(beat===0||beat===2)events.push({time:`${bar}:${beat}:0`,kind:'bass',note:chordRoots[bar],vel:.62});
-   }
-   const riff=isBlues?[0,2,3,2,1,0,2,4]:[0,0,2,4,2,1,3,4];
-   riff.forEach((n,i)=>events.push({time:`${bar}:${Math.floor(i/2)}:${i%2?2:0}`,kind:'guitar',note:notes[n],vel:isRock?.56:.43}));
+    for(let beat=0;beat<4;beat++){
+      const time=`${bar}:${beat}:0`;
+      if(v19Samplers.guitar && trackOn('trackAcoustic')){
+        const n=guitarNotes[(bar*2+beat)%guitarNotes.length];
+        events.push({time,kind:'guitar',note:n,dur:'8n',vel: isBlues?.72:.84});
+        if(isRock && beat===0) events.push({time:`${bar}:${beat}:2`,kind:'guitar',note:n,dur:'8n',vel:.42});
+      }
+      if(v19Samplers.bass && trackOn('trackBass')){
+        events.push({time,kind:'bass',note:bassNotes[(bar*2+beat)%bassNotes.length],dur:'8n',vel:.72});
+      }
+      if(v19Players.kick && trackOn('trackDrums') && (beat===0 || (!isBlues&&beat===2))){
+        events.push({time,kind:'kick',vel:.9});
+      }
+      if(v19Players.snare && trackOn('trackDrums') && (beat===1 || beat===3)){
+        events.push({time,kind:'snare',vel:.72});
+      }
+      if(v19Players.hat && trackOn('trackDrums')){
+        events.push({time,kind:'hat',vel:beat%2===0?.42:.25});
+      }
+    }
   }
-  groove.loop=true;groove.loopEnd='4m';groove.add(events);groove.start(0);toneParts.push(groove);
-  Tone.getTransport().start();toneStarted=true;
-  $('toneStatus').textContent='Tone.js играет отдельными синхронизированными партиями: '+(isBlues?'блюзовый рисунок':isRock?'роковый рисунок':'экспериментальный рисунок')+'. Темп '+bpm+' BPM. Это пока тест синтезированных тембров, не финальное звучание.';
- }catch(err){console.error(err);await toneStop();$('toneStatus').textContent='Ошибка запуска Tone.js: '+(err.message||err);}
+  const part=new Tone.Part((time,e)=>{
+    if(e.kind==='guitar' && v19Samplers.guitar) v19Samplers.guitar.triggerAttackRelease(e.note,e.dur,time,e.vel);
+    if(e.kind==='bass' && v19Samplers.bass) v19Samplers.bass.triggerAttackRelease(e.note,e.dur,time,e.vel);
+    if(v19Players[e.kind]) v19Players[e.kind].start(time,0,undefined,e.vel);
+  },events);
+  part.loop=true; part.loopEnd='4m'; part.start(0);
+  v19Parts.push(part);
+  v19Ready=true;
+  return {bpm,isBlues,isRock};
 }
-$('tonePlay').onclick=tonePlay;$('toneStop').onclick=toneStop;
+
+async function tonePlay(){
+  try{
+    await v19Stop();
+    $('toneStatus').textContent='Подготавливаю загруженные аудиозаписи…';
+    const info=await v19Build();
+    Tone.getTransport().start();
+    const active=Object.keys(v19Files).join(', ');
+    $('toneStatus').textContent=`Tone.js воспроизводит реальные загруженные записи (${active}). ${info.isBlues&&info.isRock?'Профиль Rock + Blues':info.isBlues?'Блюзовый рисунок':info.isRock?'Роковый рисунок':'экспериментальный рисунок'}. Темп ${info.bpm} BPM.`;
+  }catch(err){
+    console.error(err);
+    await v19Stop();
+    $('toneStatus').textContent='Не удалось запустить: '+(err.message||err);
+  }
+}
+$('tonePlay').onclick=tonePlay;
+$('toneStop').onclick=async()=>{await v19Stop();$('toneStatus').textContent='Воспроизведение Tone.js остановлено.';};
+
 function savedLoad(){let arr=[];try{arr=JSON.parse(localStorage.getItem('alchemyIdeas')||'[]')}catch(e){}$('saved').innerHTML='';arr.forEach((x,i)=>{let d=document.createElement('div');d.className='saved';let s=document.createElement('span');s.textContent=x.genres.join(' × ')+' · '+x.bpm+' BPM';let group=document.createElement('div'),load=document.createElement('button'),del=document.createElement('button');load.className='btn small';load.textContent='Загрузить';load.onclick=()=>{genres=x.genres.slice();$('bpm').value=x.bpm;$('intensity').value=x.intensity;$('space').value=x.space;$('volume').value=x.volume;render();outputs()};del.className='btn small';del.textContent='×';del.onclick=()=>{arr.splice(i,1);localStorage.setItem('alchemyIdeas',JSON.stringify(arr));savedLoad()};group.append(load,del);d.append(s,group);$('saved').append(d)})}
 $('save').onclick=()=>{let arr=[];try{arr=JSON.parse(localStorage.getItem('alchemyIdeas')||'[]')}catch(e){}arr.unshift({genres:[...genres],bpm:+$('bpm').value,intensity:+$('intensity').value,space:+$('space').value,volume:+$('volume').value});localStorage.setItem('alchemyIdeas',JSON.stringify(arr.slice(0,30)));savedLoad()};$('clear').onclick=()=>{localStorage.removeItem('alchemyIdeas');savedLoad()};savedLoad();
 function promptText(){let p=$('prompt').value.trim();if(!p)p='Create a music track blending '+(genres.join(', ')||'dark ambient, pagan folk and industrial techno')+'. Tempo '+$('bpm').value+' BPM, '+$('intensity').value+'% intensity, '+$('space').value+'% spacious reverb. '+$('vocal').value+'. '+($('length').value==='short'?'Short experimental clip, around 20-30 seconds.':'Longer evolving music sketch, several minutes.')+' Make the genres blend naturally, with an original melody and arrangement. For orchestral or cinematic styles use layered sustained strings and dramatic dynamics; for folk styles add flute-like melodic phrases; for electronic styles use a defined pulsing bass and rhythmic synth textures.';else p += '\nGenres: '+(genres.join(', ')||'experimental')+'. Tempo '+$('bpm').value+' BPM. '+$('vocal').value+'. '+($('length').value==='short'?'Short clip.':'Longer evolving track.');return p}
