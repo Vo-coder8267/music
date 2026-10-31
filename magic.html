@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100c16">
-<title>Музыкальная алхимия — v14, музыкальная лаборатория</title>
+<title>Музыкальная алхимия — v15, Rock / Blues</title>
 <style>
 :root{color-scheme:dark;--bg:#100d15;--panel:#1b1522;--line:#45334f;--text:#f6effa;--muted:#b8a8c5;--gold:#e5c184;--violet:#b29af7;--green:#9bdab5}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0,#3b2348 0,transparent 40%),var(--bg);color:var(--text);font:15px/1.5 system-ui,Segoe UI,sans-serif}
@@ -11,14 +11,14 @@ header{padding:26px clamp(16px,4vw,48px);border-bottom:1px solid #33263c;display
 main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{display:grid;grid-template-columns:minmax(280px,.95fr) minmax(320px,1.05fr);gap:18px;align-items:start}.panel{background:linear-gradient(145deg,#1d1725,#15111b);border:1px solid var(--line);border-radius:16px;padding:19px;margin-bottom:16px;min-width:0;box-shadow:0 12px 40px #0002}h2{font-size:18px;margin:0 0 4px}.sub{font-size:13px;color:var(--muted);margin:0 0 15px}label{display:block;color:#e0d4e8;font-size:13px;margin:12px 0 6px}input,textarea,select{width:100%;border:1px solid #4c3958;border-radius:10px;background:#100d16;color:var(--text);font:inherit;padding:10px 12px}textarea{min-height:82px;resize:vertical}input:focus,textarea:focus,select:focus{outline:2px solid #8f70c6}input[type=range]{padding:0;border:0;accent-color:var(--violet)}.row{display:flex;gap:8px}.row input{min-width:0}.btn{background:#2c2237;border:1px solid #604a70;color:var(--text);border-radius:10px;padding:10px 13px;font:inherit;font-weight:650;cursor:pointer}.btn:hover{filter:brightness(1.15)}.primary{background:linear-gradient(120deg,#7958a1,#4c3767);border-color:#9c7bb9}.gold{background:#3c2e1d;border-color:#8c7045;color:#f4dba9}.small{padding:6px 9px;font-size:12px}.presets,.chips,.actions{display:flex;flex-wrap:wrap;gap:7px}.presets{margin:12px 0}.presets .btn{font-size:12px;padding:7px 9px}.chip{background:#2b2035;border:1px solid #634b72;border-radius:999px;padding:5px 9px;font-size:13px;display:flex;gap:7px;align-items:center}.chip button{background:none;border:0;color:#eadcf3;cursor:pointer;font-size:16px}.rangehead{display:flex;justify-content:space-between;gap:10px}.rangehead output{color:var(--gold);font-size:13px}.divider{height:1px;background:#392a43;margin:17px 0}.art{height:205px;border:1px solid #493454;border-radius:13px;background:radial-gradient(ellipse at center,#573a71 0,#292038 40%,#100d16 78%);display:grid;place-items:center;position:relative;overflow:hidden;margin:13px 0}.orbit{display:none}.orbit:before,.orbit:after{content:"";position:absolute;inset:19px;border:1px solid #b29af780;border-radius:50%}.orbit:after{inset:43px;border-color:#e5c18480}.rune{font-size:60px;color:#f1d9a4;text-shadow:0 0 25px #b29af7;z-index:1}@keyframes spin{to{transform:rotate(360deg)}}.bars{display:flex;align-items:center;justify-content:center;gap:4px;height:35px}.bars i{height:7px;width:4px;border-radius:5px;background:linear-gradient(var(--gold),var(--violet))}.playing .bars i{height:18px}.status{font-size:12px;color:var(--muted);min-height:18px;margin-top:7px}.mixrow{display:grid;grid-template-columns:1fr 100px 34px;align-items:center;gap:8px;margin:10px 0}.mixrow label{margin:0}.mixrow output{color:var(--gold);font-size:12px;text-align:right}.note{border-left:3px solid var(--gold);background:#241c2d;padding:10px 12px;border-radius:7px;color:#d9cde2;font-size:12px;margin-top:13px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.savedlist{display:grid;gap:8px;margin-top:12px}.saved{border:1px solid #3e2e49;border-radius:10px;padding:9px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px}.saved span{overflow-wrap:anywhere}.track-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.track{display:flex;align-items:center;gap:8px;margin:0;padding:9px 10px;border:1px solid #493653;border-radius:9px;background:#17111d}.track input{width:auto;accent-color:var(--violet)}.audio{width:100%;margin-top:12px}.footer{text-align:center;color:#8d7e99;font-size:12px;padding:5px 15px 25px}
 @media(max-width:800px){.grid{grid-template-columns:1fr}.panel{padding:15px}.art{height:120px}}
 
-/* v14: sound-first workspace */
+/* v14: sound-first workspace; v15: genre-specific composition */
 #library { display:none !important; }
 #prompt, label[for="prompt"], #length, #vocal, #openAI, #copyPrompt, #aiStatus { display:none !important; }
 .two:has(#length) { display:none !important; }
 
 </style></head>
 <body>
-<header><div class="brand"><div class="sigil">✶</div><div><h1>Музыкальная алхимия</h1><p>Бесплатная лаборатория жанров</p></div></div><span class="stamp">v14 · лаборатория звука · 0 ₽</span></header>
+<header><div class="brand"><div class="sigil">✶</div><div><h1>Музыкальная алхимия</h1><p>Бесплатная лаборатория жанров</p></div></div><span class="stamp">v15 · разные музыкальные профили · 0 ₽</span></header>
 <main><div class="grid"><section>
 <div class="panel"><h2>Ⅰ. Ингредиенты</h2><p class="sub">Вводи любой жанр или сочетание. Можно вводить любые названия. Незнакомый жанр не будет случайно менять гамму: он добавится как мягкая нейтральная основа, пока не появится отдельный звуковой профиль.</p>
 <div class="row"><input id="genreInput" placeholder="Pagan Folk, Dark Jazz…" aria-label="Жанры"><button class="btn primary" id="add">Добавить</button></div>
@@ -37,7 +37,7 @@ main{max-width:1320px;margin:auto;padding:24px clamp(12px,3vw,38px) 45px}.grid{d
 <div class="panel"><h2>Ⅲ. Сохранённые формулы</h2><p class="sub">Сохраняются только в этом браузере на этом устройстве.</p><div class="actions"><button class="btn" id="save">✦ Сохранить смесь</button><button class="btn small" id="clear">Очистить</button></div><div id="saved" class="savedlist"></div></div>
 </section><section>
 <div class="panel"><h2>Текущая музыкальная формула</h2><p class="sub">Здесь отображается выбранная музыкальная формула.</p><div class="art" id="art" style="height:76px;background:#17121d"><div class="rune" id="rune" style="font-size:30px">✧</div></div><div class="bars" id="bars"></div><strong id="title">Неизвестная формула</strong><div class="status" id="desc">Добавь жанр и нажми «Слушать эскиз».</div>
-<div class="divider"></div><h2>Следующий этап</h2><p class="sub">Внешнюю AI-демонстрацию пока не используем. Сначала добиваемся выразительного звучания и музыкально разных жанров; затем отдельно подключим аудиодвижок и проверим инструменты машинного обучения.</p>
+<div class="divider"></div><h2>Следующий этап</h2><p class="sub">Rock, Delta Blues и Rock + Blues теперь используют разные мелодические фразы и музыкальные опоры. Это экспериментальная первая версия жанровой логики. Сначала добиваемся выразительного звучания и музыкально разных жанров; затем отдельно подключим аудиодвижок и проверим инструменты машинного обучения.</p>
 <label for="prompt">Твоё описание композиции</label><textarea id="prompt" placeholder="Например: pagan folk blended with industrial techno, ritual drums, ancient flute, distorted bass, dark cinematic atmosphere, instrumental"></textarea>
 <div class="two"><div><label for="length">Тип</label><select id="length"><option value="short">Короткий фрагмент</option><option value="long">Длинная заготовка</option></select></div><div><label for="vocal">Вокал</label><select id="vocal"><option>Instrumental, no vocals</option><option>With vocals</option></select></div></div>
 <div class="actions" style="margin-top:13px"><button class="btn primary" id="openAI">✦ Открыть бесплатную AI-генерацию</button><button class="btn" id="copyPrompt">Копировать промпт</button></div>
@@ -108,6 +108,52 @@ function current(){
  const shape=p.every(x=>x.shape==='sine')?'sine':'triangle';
  return {bpm,shape,scale,glyph:p[0].glyph,desc:p.map((x,i)=>genres[i]+': '+x.desc).join(' · '),kind:kinds[0],kinds};
 }
+
+function compositionMode(){
+ const txt=genres.join(' ').toLowerCase();
+ const hasRock=/rock|punk|grunge/.test(txt);
+ const hasBlues=/blues/.test(txt);
+ return hasRock&&hasBlues?'rockBlues':hasBlues?'blues':hasRock?'rock':'general';
+}
+function compositionScale(base){
+ const mode=compositionMode();
+ if(mode==='blues') return [0,3,5,6,7,10];       // minor pentatonic + blue fifth
+ if(mode==='rockBlues') return [0,2,3,5,6,7,10]; // rock major/minor color + blue fifth
+ if(mode==='rock') return [0,2,3,5,7,10];
+ return base;
+}
+function compositionMotif(bar){
+ const mode=compositionMode();
+ const rock=[
+  [{step:0,n:0,len:1.35,v:1.00},{step:2,n:3,len:.72,v:.82},{step:4,n:0,len:.92,v:.92},{step:6,n:4,len:1.45,v:1.00}],
+  [{step:0,n:0,len:.95,v:.95},{step:1,n:2,len:.55,v:.72},{step:3,n:4,len:.85,v:.90},{step:4,n:3,len:.70,v:.78},{step:6,n:0,len:1.25,v:1.00}],
+  [{step:0,n:4,len:.82,v:.88},{step:2,n:3,len:.72,v:.82},{step:4,n:2,len:.82,v:.88},{step:7,n:0,len:1.25,v:1.00}],
+  [{step:0,n:0,len:1.05,v:1.00},{step:3,n:4,len:.72,v:.78},{step:4,n:5,len:.82,v:.88},{step:6,n:3,len:1.30,v:1.00}]
+ ];
+ const blues=[
+  [{step:0,n:0,len:1.45,v:1.00},{step:2,n:2,len:1.00,v:.76},{step:3,n:3,len:.55,v:.70},{step:5,n:4,len:1.15,v:.90},{step:7,n:2,len:1.20,v:.82}],
+  [{step:0,n:4,len:1.10,v:.88},{step:2,n:3,len:.85,v:.76},{step:4,n:2,len:1.25,v:.92},{step:6,n:1,len:.70,v:.75},{step:7,n:0,len:1.20,v:1.00}],
+  [{step:1,n:2,len:1.05,v:.75},{step:3,n:3,len:.60,v:.70},{step:4,n:4,len:1.25,v:.92},{step:6,n:5,len:.75,v:.82},{step:7,n:4,len:1.10,v:.90}],
+  [{step:0,n:0,len:1.25,v:1.00},{step:2,n:2,len:.85,v:.78},{step:4,n:3,len:.60,v:.72},{step:5,n:4,len:1.10,v:.90},{step:7,n:0,len:1.30,v:1.00}]
+ ];
+ const hybrid=[
+  [{step:0,n:0,len:1.20,v:1.00},{step:2,n:3,len:.70,v:.82},{step:3,n:4,len:.55,v:.72},{step:4,n:0,len:.90,v:.95},{step:6,n:5,len:1.30,v:1.00}],
+  [{step:0,n:0,len:.95,v:1.00},{step:1,n:2,len:.55,v:.72},{step:3,n:4,len:.78,v:.88},{step:4,n:3,len:.65,v:.78},{step:6,n:6,len:1.25,v:1.00}],
+  [{step:0,n:4,len:.85,v:.90},{step:2,n:3,len:.70,v:.82},{step:4,n:2,len:.85,v:.88},{step:5,n:3,len:.55,v:.76},{step:7,n:0,len:1.30,v:1.00}],
+  [{step:0,n:0,len:1.05,v:1.00},{step:2,n:4,len:.75,v:.84},{step:4,n:5,len:.70,v:.82},{step:5,n:4,len:.55,v:.76},{step:7,n:0,len:1.30,v:1.00}]
+ ];
+ const bank=mode==='blues'?blues:mode==='rockBlues'?hybrid:mode==='rock'?rock:null;
+ if(bank)return bank[bar%bank.length];
+ const general=[
+  [{step:0,n:0,len:1.45,v:1.00},{step:2,n:2,len:.72,v:.72},{step:4,n:1,len:.88,v:.78},{step:6,n:3,len:1.55,v:1.05}],
+  [{step:0,n:2,len:1.00,v:.86},{step:3,n:4,len:.72,v:.74},{step:5,n:3,len:.70,v:.78},{step:7,n:1,len:1.35,v:.92}],
+  [{step:1,n:1,len:.88,v:.72},{step:3,n:3,len:.92,v:.88},{step:5,n:4,len:.70,v:.82},{step:7,n:2,len:1.25,v:1.00}],
+  [{step:0,n:0,len:1.00,v:.92},{step:2,n:2,len:.78,v:.76},{step:5,n:4,len:1.00,v:.90}]
+ ];
+ return general[bar%general.length];
+}
+function bluesShuffleStep(i){ return i===0||i===3||i===4||i===7; }
+
 function render(){ $('chips').innerHTML='';genres.forEach((g,i)=>{let el=document.createElement('span');el.className='chip';el.append(document.createTextNode(g));let b=document.createElement('button');b.textContent='×';b.title='Удалить жанр';b.onclick=()=>{genres.splice(i,1);render()};el.append(b);$('chips').append(el)});let p=current();if(!genres.length){$('title').textContent='Неизвестная формула';$('desc').textContent='Добавь жанр и нажми «Слушать эскиз».';$('rune').textContent='✧';return}$('title').textContent=genres.join(' × ');$('desc').textContent=p.desc;$('rune').textContent=p.glyph;$('bpm').value=p.bpm;outputs();}
 function outputs(){$('bpmO').textContent=$('bpm').value;$('intO').textContent=$('intensity').value+'%';$('spaceO').textContent=$('space').value+'%';$('volumeO').textContent=$('volume').value+'%';}
 function addGenres(s){s.split(/[,;+\n]/).map(x=>x.trim()).filter(Boolean).forEach(g=>{if(!genres.some(a=>norm(a)===norm(g)))genres.push(g)});render();}
@@ -195,7 +241,7 @@ const REAL_GUITAR_SET=[
  {midi:67,name:'G4',file:'INSGuitarSteel_StringHighE_Vel02_G4_01.ogg'},
  {midi:72,name:'C5',file:'INSGuitarSteel_StringG_Vel02_C5_01.ogg'}
 ];
-async function loadRealGuitar(){if(realGuitarSamples.length===REAL_GUITAR_SET.length){$('realGuitarStatus').textContent='Гитарные записи уже загружены: 8 нот. В рок-мелодии синтезированный ведущий звук заменён сэмплами.';return;}if(realGuitarLoading)return;realGuitarLoading=true;$('loadRealGuitar').disabled=true;$('realGuitarStatus').textContent='Загружаю 8 гитарных нот из Meta Open Sound…';try{ensure();await ctx.resume();for(const item of REAL_GUITAR_SET){if(realGuitarSamples.some(x=>x.midi===item.midi))continue;const url='https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/main/systems/instruments/meta-steel-guitar/ogg/'+item.file;const response=await fetch(url);if(!response.ok)throw new Error('HTTP '+response.status+' при загрузке '+item.file);const buf=await ctx.decodeAudioData(await response.arrayBuffer());realGuitarSamples.push({midi:item.midi,buffer:buf,name:item.name});}realGuitarSamples.sort((a,b)=>a.midi-b.midi);$('realGuitarStatus').textContent='Готово: загружены реальные записи стальной акустической гитары ('+realGuitarSamples.length+' нот, CC0). Для рок-мелодии используется ближайшая записанная нота с умеренным изменением высоты.';$('synthStatus').textContent='Версия 14 (звуковое ядро пока прежнее): микшер перезапускает звук сразу после изменения партии; реальные гитарные записи используются, если они загружены.';}catch(err){$('realGuitarStatus').textContent='Не удалось загрузить гитарные записи. Проверь интернет и нажми кнопку ещё раз. Ошибка: '+err.message;}finally{realGuitarLoading=false;$('loadRealGuitar').disabled=false;}}
+async function loadRealGuitar(){if(realGuitarSamples.length===REAL_GUITAR_SET.length){$('realGuitarStatus').textContent='Гитарные записи уже загружены: 8 нот. В рок-мелодии синтезированный ведущий звук заменён сэмплами.';return;}if(realGuitarLoading)return;realGuitarLoading=true;$('loadRealGuitar').disabled=true;$('realGuitarStatus').textContent='Загружаю 8 гитарных нот из Meta Open Sound…';try{ensure();await ctx.resume();for(const item of REAL_GUITAR_SET){if(realGuitarSamples.some(x=>x.midi===item.midi))continue;const url='https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/main/systems/instruments/meta-steel-guitar/ogg/'+item.file;const response=await fetch(url);if(!response.ok)throw new Error('HTTP '+response.status+' при загрузке '+item.file);const buf=await ctx.decodeAudioData(await response.arrayBuffer());realGuitarSamples.push({midi:item.midi,buffer:buf,name:item.name});}realGuitarSamples.sort((a,b)=>a.midi-b.midi);$('realGuitarStatus').textContent='Готово: загружены реальные записи стальной акустической гитары ('+realGuitarSamples.length+' нот, CC0). Для рок-мелодии используется ближайшая записанная нота с умеренным изменением высоты.';$('synthStatus').textContent='Версия 15: жанровая мелодическая логика обновлена. микшер перезапускает звук сразу после изменения партии; реальные гитарные записи используются, если они загружены.';}catch(err){$('realGuitarStatus').textContent='Не удалось загрузить гитарные записи. Проверь интернет и нажми кнопку ещё раз. Ошибка: '+err.message;}finally{realGuitarLoading=false;$('loadRealGuitar').disabled=false;}}
 $('loadRealGuitar').addEventListener('click',loadRealGuitar);
 function nearestRealGuitar(freq){if(!realGuitarSamples.length)return null;const midi=69+12*Math.log2(freq/440);let best=realGuitarSamples[0];for(const x of realGuitarSamples)if(Math.abs(x.midi-midi)<Math.abs(best.midi-midi))best=x;return {buffer:best.buffer,rate:Math.max(.5,Math.min(2,Math.pow(2,(midi-best.midi)/12)))};}
 function triggerRealGuitar(t,freq,gain=0.6,targetCtx=ctx,targetMaster=master,offline=false){const pick=nearestRealGuitar(freq);if(!pick)return false;const src=targetCtx.createBufferSource(),g=targetCtx.createGain();src.buffer=pick.buffer;src.playbackRate.setValueAtTime(pick.rate,t);g.gain.setValueAtTime(Math.max(.001,gain)*(+$('intensity').value/100),t);src.connect(g);g.connect(targetMaster);src.start(t);if(!offline)nodes.push(src);return true;}
@@ -203,7 +249,7 @@ function triggerSample(category,t,rate=1,gain=1,targetCtx=ctx,targetMaster=maste
 function schedule(){
  if(!playing)return;ensure();
  const p=current(),now=ctx.currentTime+.06,beat=60/(+$('bpm').value),int=+$('intensity').value/100;
- const kinds=p.kinds||[p.kind],scale=p.scale.length?p.scale:[0,3,5,7,10];
+ const kinds=p.kinds||[p.kind],scale=compositionScale(p.scale.length?p.scale:[0,3,5,7,10]);
  const cycleStart=phraseBar;
  const heavy=kinds.some(k=>['heavy','blast'].includes(k))||/metal|industrial|hardcore/i.test(genres.join(' '));
  const genreText=genres.join(' ').toLowerCase(),orchestral=/orchestral|symphonic|classical|cinematic|neoclassical|оркестр|симфон|классическ/.test(genreText),folk=/folk|pagan|medieval|celtic|фолк|народн|средневек/.test(genreText),electronic=/electro|techno|house|trance|industrial|synth|edm|электрон|техно/.test(genreText);
@@ -223,14 +269,18 @@ function schedule(){
     const f=110*Math.pow(2/(1),semi/12);
     osc(f,barStart,Math.min(2.8*beat,beat*2.6),'sine',(ambient?.0048:.0034)*int,{cutoff:ambient?620:780,detune:0,pan:(j-1)*.22,attack:Math.min(.9,beat*1.4)});
    });
-   if(rock&&trackOn('trackAcoustic')&&(realGuitarSamples.length||(sampleBuffers.guitar&&sampleBuffers.guitar.length))){const rootF=82.41*Math.pow(2,root/12);[0,4].forEach((pos,idx)=>{const gt=barStart+pos*beat/2;if(realGuitarSamples.length)triggerRealGuitar(gt,rootF,.30);else triggerSample('guitar',gt,rootF/130.81,.30);if(realGuitarSamples.length)triggerRealGuitar(gt+.012,rootF*1.5,.12);else triggerSample('guitar',gt+.012,rootF*1.5/130.81,.12);});}
+   if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')&&(realGuitarSamples.length||(sampleBuffers.guitar&&sampleBuffers.guitar.length))){const rootF=82.41*Math.pow(2,root/12);[0,4].forEach((pos,idx)=>{const gt=barStart+pos*beat/2;if(realGuitarSamples.length)triggerRealGuitar(gt,rootF,.30);else triggerSample('guitar',gt,rootF/130.81,.30);if(realGuitarSamples.length)triggerRealGuitar(gt+.012,rootF*1.5,.12);else triggerSample('guitar',gt+.012,rootF*1.5/130.81,.12);});}
   }
   for(let i=0;i<8;i++){
    const t=barStart+i*beat/2;
    if(rock&&trackOn('trackDrums')&&(i===0||i===4)){if(!triggerSample('kick',t,1,.82))kick(t,.82);}
+   if(compositionMode()==='blues'&&trackOn('trackDrums')&&i===0){if(!triggerSample('kick',t,1,.52))kick(t,.52);}
    if(rock&&trackOn('trackBass')&&(i===0||i===4)){rockBass(t,82.41*Math.pow(2,scale[0]/12),i===0?1:.82);}
+   if(compositionMode()==='blues'&&trackOn('trackBass')&&bluesShuffleStep(i)){rockBass(t,82.41*Math.pow(2/1,scale[0]/12),i===0?1:.58);}
    if(rock&&trackOn('trackDrums')&&(i===2||i===6)){if(!triggerSample('snare',t,1,.72))noise(t,.085,.048,850);}
+   if(compositionMode()==='blues'&&trackOn('trackDrums')&&(i===4)){if(!triggerSample('snare',t,1,.38))noise(t,.065,.022,950);}
    if(rock&&trackOn('trackDrums')&&i%2===1){if(!triggerSample('hat',t,1,.14))noise(t,.035,.0028,5200);}
+   if(compositionMode()==='blues'&&trackOn('trackDrums')&&i%2===1){if(!triggerSample('hat',t,1,.07))noise(t,.028,.0015,4300);}
    if(!rock&&trackOn('trackDrums')&&trackOn('trackBass')&&dance&&i%2===0){if(!triggerSample('kick',t,1,i===0?1:.72))kick(t,i===0?1:.72);}
    else if(!rock&&trackOn('trackDrums')&&trackOn('trackBass')&&heavy&&(i===0||i===4)){if(!triggerSample('kick',t,1,.75))kick(t,.75);}
    if(!rock&&trackOn('trackDrums')&&(i===2||i===6)){
@@ -239,20 +289,14 @@ function schedule(){
    }
    if(!rock&&trackOn('trackDrums')&&(dance||heavy||kinds.some(k=>['hiphop','break','jazz','tribal'].includes(k)))&&i%2===1){if(!triggerSample('hat',t,1,ambient?.12:.24))noise(t,.045,ambient?.0025:.0038,1750);} // sampled hi-hat when provided
    // Певучая фраза с паузами, разной длительностью и выразительным окончанием.
-   const motifs=[
-    [{step:0,n:0,len:1.45,v:1.00},{step:2,n:2,len:.72,v:.72},{step:4,n:1,len:.88,v:.78},{step:6,n:3,len:1.55,v:1.05}],
-    [{step:0,n:2,len:1.00,v:.86},{step:3,n:4,len:.72,v:.74},{step:5,n:3,len:.70,v:.78},{step:7,n:1,len:1.35,v:.92}],
-    [{step:1,n:1,len:.88,v:.72},{step:3,n:3,len:.92,v:.88},{step:5,n:4,len:.70,v:.82},{step:7,n:2,len:1.25,v:1.00}],
-    [{step:0,n:0,len:1.00,v:.92},{step:2,n:2,len:.78,v:.76},{step:5,n:4,len:1.00,v:.90}]
-   ];
-   const motif=motifs[(cycleStart+bar)%motifs.length], note=motif.find(x=>x.step===i);
+   const note=compositionMotif(cycleStart+bar).find(x=>x.step===i);
    if(trackOn('trackMelody')&&note){
     const ix=note.n%scale.length, octave=((cycleStart+bar)%4===2&&note.n>=3)?12:0;
     const semi=scale[ix]+octave, f=146.83*Math.pow(2,semi/12), phraseEnd=note.len>1.2;
     const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');
-    if(rock&&trackOn('trackAcoustic')&&realGuitarSamples.length){triggerRealGuitar(t,f,.62*note.v);}
-    else if(rock&&trackOn('trackAcoustic')&&sampleBuffers.guitar&&sampleBuffers.guitar.length){triggerSample('guitar',t,f/130.81,.60*note.v);}
-    else if(rock&&trackOn('trackAcoustic')){rockGuitar(t,f,Math.min(beat*note.len,1.8),.78,Math.sin(i+cycleStart+bar)*.08);}
+    if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')&&realGuitarSamples.length){triggerRealGuitar(t,f,.62*note.v);}
+    else if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')&&sampleBuffers.guitar&&sampleBuffers.guitar.length){triggerSample('guitar',t,f/130.81,.60*note.v);}
+    else if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')){rockGuitar(t,f,Math.min(beat*note.len,1.8),.78,Math.sin(i+cycleStart+bar)*.08);}
     else if(!(trackOn('trackAcoustic')&&triggerSample(melodicSample,t,f/130.81,.48))&&!(trackOn('trackAcoustic')&&triggerSample('guitar',t,f/130.81,.48)))
       osc(f,t,Math.min(beat*note.len,2.0), 'sine',(heavy||dance?.075:.068)*int*note.v,{cutoff:heavy?820:1250,detune:0,pan:Math.sin(i+cycleStart+bar)*.07,attack:phraseEnd?.26:.14,vibrato:heavy?1.8:2.6,warm:true});
    }
@@ -262,7 +306,7 @@ function schedule(){
  phraseBar=cycleStart+2;
  timer=setTimeout(schedule,beat*8000);
 }
-async function play(){if(playing){stop()}phraseBar=0;ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent=realGuitarSamples.length?'Версия 14 (звуковое ядро пока прежнее): ведущая рок-мелодия звучит реальными гитарными записями; бас и ударные пока синтезированы.':'Версия 14 (звуковое ядро пока прежнее): если реальные гитарные записи не загружены, рок-тембр остаётся синтезированным. Нажми «Загрузить бесплатные записи гитары», чтобы заменить его записями.';schedule();}
+async function play(){if(playing){stop()}phraseBar=0;ensure();await ctx.resume();playing=true;$('art').classList.add('playing');$('synthStatus').textContent=realGuitarSamples.length?'Версия 15: жанровая мелодическая логика обновлена. ведущая рок-мелодия звучит реальными гитарными записями; бас и ударные пока синтезированы.':'Версия 15: жанровая мелодическая логика обновлена. если реальные гитарные записи не загружены, рок-тембр остаётся синтезированным. Нажми «Загрузить бесплатные записи гитары», чтобы заменить его записями.';schedule();}
 function stop(){playing=false;clearTimeout(timer);nodes.forEach(n=>{try{n.stop()}catch(e){}});nodes=[];$('art').classList.remove('playing');}
 function applyMixerImmediately(){if(!playing)return;stop();play();}
 const mixerIds=['trackMelody','trackHarmony','trackDrums','trackBass','trackAcoustic','trackElectronic'];
@@ -270,14 +314,14 @@ mixerIds.forEach(id=>$(id).addEventListener('change',applyMixerImmediately));
 $('play').onclick=play;$('stop').onclick=()=>{stop();$('synthStatus').textContent='Остановлено.'};$('rune').textContent='✧';
 $('bars').innerHTML=Array.from({length:31},()=>'<i></i>').join('');
 async function renderWav(){
- stop();$('synthStatus').textContent='Создаю WAV v13: учитываю актуальные переключатели микшера и загруженные гитарные записи…';
+ stop();$('synthStatus').textContent='Создаю WAV v15: учитываю актуальные переключатели микшера и загруженные гитарные записи…';
  const sr=24000,seconds=16,frames=sr*seconds,off=new OfflineAudioContext(2,frames,sr);
  const master=off.createGain();master.gain.value=+$('volume').value/100*.30;
  const comp=off.createDynamicsCompressor();comp.threshold.value=-18;comp.knee.value=14;comp.ratio.value=3;comp.attack.value=.012;comp.release.value=.22;
  const delay=off.createDelay(.8);delay.delayTime.value=.28;const fb=off.createGain();fb.gain.value=.075;
  const wet=off.createGain();wet.gain.value=+$('space').value/100*.12;
  master.connect(comp);comp.connect(off.destination);master.connect(delay);delay.connect(fb);fb.connect(delay);delay.connect(wet);wet.connect(comp);
- const p=current(),beat=60/(+$('bpm').value),int=+$('intensity').value/100,kinds=p.kinds||[p.kind],scale=p.scale.length?p.scale:[0,3,5,7,10];
+ const p=current(),beat=60/(+$('bpm').value),int=+$('intensity').value/100,kinds=p.kinds||[p.kind],scale=compositionScale(p.scale.length?p.scale:[0,3,5,7,10]);
  function tone(freq,t,d,w,a,pan=0,cutoff=3000,detune=0,warm=false,lead=false){
   const o=off.createOscillator(),f=off.createBiquadFilter(),g=off.createGain(),st=off.createStereoPanner();
   o.type=w;o.frequency.setValueAtTime(freq,t);o.detune.value=detune;f.type='lowpass';f.frequency.value=cutoff;st.pan.value=pan;
@@ -312,7 +356,7 @@ async function renderWav(){
   const bs=bar*4*beat;if(bs>=seconds)break;
   const progression=[0,Math.max(0,scale.length-1),Math.min(2,scale.length-1),Math.min(1,scale.length-1)];
   const degree=progression[bar%progression.length],root=scale[degree],chord=[root,scale[(degree+2)%scale.length]??7,scale[(degree+4)%scale.length]??10];
-  if(rock&&trackOn('trackAcoustic')&&(realGuitarSamples.length||(sampleBuffers.guitar&&sampleBuffers.guitar.length))){const rootF=82.41*Math.pow(2,root/12);[0,4].forEach((pos,idx)=>{const gt=bs+pos*beat/2;if(realGuitarSamples.length)sampledRealGuitar(gt,rootF,.30);else sampled('guitar',gt,rootF/130.81,.30);if(realGuitarSamples.length)sampledRealGuitar(gt+.012,rootF*1.5,.12);else sampled('guitar',gt+.012,rootF*1.5/130.81,.12);});}
+  if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')&&(realGuitarSamples.length||(sampleBuffers.guitar&&sampleBuffers.guitar.length))){const rootF=82.41*Math.pow(2,root/12);[0,4].forEach((pos,idx)=>{const gt=bs+pos*beat/2;if(realGuitarSamples.length)sampledRealGuitar(gt,rootF,.30);else sampled('guitar',gt,rootF/130.81,.30);if(realGuitarSamples.length)sampledRealGuitar(gt+.012,rootF*1.5,.12);else sampled('guitar',gt+.012,rootF*1.5/130.81,.12);});}
   if(trackOn('trackAcoustic')&&(orchestral||folk)){const f=folk?523.25:110;if(!sampled(folk?'flute':'strings',bs,1,.45))tone(f,bs,Math.min(3.1*beat,seconds-bs),'sine',.014*int,folk?.2:-.25,orchestral?1500:2600);if(orchestral)tone(f*1.5,bs+.02,Math.min(2.8*beat,seconds-bs),'triangle',.009*int,.25,2100);}if(trackOn('trackElectronic')&&electronic)tone(55,bs,Math.min(1.5*beat,seconds-bs),'sine',.0025*int,0,heavy?240:300);if(trackOn('trackHarmony'))chord.forEach((semi,j)=>{const f=110*Math.pow(2,semi/12);tone(f,bs,Math.min(3.6*beat,seconds-bs),'sine',(.010/(j+1))*int,(j-1)*.26,ambient?800:1050,0);tone(f*2,bs+.04,Math.min(2.8*beat,seconds-bs),'sine',.0007*int,(1-j)*.16,1250)});
   for(let i=0;i<8;i++){
    const t=bs+i*beat/2;if(t>=seconds)continue;
@@ -323,14 +367,8 @@ async function renderWav(){
    if(!rock&&trackOn('trackDrums')&&trackOn('trackBass')&&((dance&&i%2===0)||(heavy&&(i===0||i===4)))){if(!sampled('kick',t,1,i===0?1:.7))bass(t,i===0?1:.7);}
    if(trackOn('trackDrums')&&(i===2||i===6)){if(heavy||kinds.includes('break')){if(!sampled('snare',t,1,.8))hit(t,.10,.060,650)}else if(dance){if(!sampled('snare',t,1,.65))hit(t,.065,.035,1100)}}
    if(trackOn('trackDrums')&&(dance||heavy||kinds.some(k=>['hiphop','break','jazz','tribal'].includes(k)))&&i%2===1){if(!sampled('hat',t,1,ambient?.12:.24))hit(t,.045,ambient?.0025:.0038,1750);}
-   const motifs=[
-    [{step:0,n:0,len:1.45,v:1.00},{step:2,n:2,len:.72,v:.72},{step:4,n:1,len:.88,v:.78},{step:6,n:3,len:1.55,v:1.05}],
-    [{step:0,n:2,len:1.00,v:.86},{step:3,n:4,len:.72,v:.74},{step:5,n:3,len:.70,v:.78},{step:7,n:1,len:1.35,v:.92}],
-    [{step:1,n:1,len:.88,v:.72},{step:3,n:3,len:.92,v:.88},{step:5,n:4,len:.70,v:.82},{step:7,n:2,len:1.25,v:1.00}],
-    [{step:0,n:0,len:1.00,v:.92},{step:2,n:2,len:.78,v:.76},{step:5,n:4,len:1.00,v:.90}]
-   ];
-   const note=motifs[bar%motifs.length].find(x=>x.step===i);
-   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if(rock&&trackOn('trackAcoustic')&&realGuitarSamples.length){sampledRealGuitar(t,f,.62*note.v)}else if(rock&&trackOn('trackAcoustic')&&sampleBuffers.guitar&&sampleBuffers.guitar.length){sampled('guitar',t,f/130.81,.60*note.v)}else if(rock&&trackOn('trackAcoustic')){rockGuitarTone(t,f,Math.min(beat*note.len,1.8,seconds-t),.78,Math.sin(i+bar)*.08)}else if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.48))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.48)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'sine',(heavy||dance?.075:.068)*int*note.v,Math.sin(i+bar)*.07,heavy?820:(folk?1500:1250),0,true,true)}
+   const note=compositionMotif(bar).find(x=>x.step===i);
+   if(trackOn('trackMelody')&&note){const ix=note.n%scale.length,octave=(bar%4===2&&note.n>=3)?12:0,semi=scale[ix]+octave,f=146.83*Math.pow(2,semi/12);const melodicSample=folk?'flute':orchestral?'strings':(/blues|jazz/.test(genreText)?'piano':'guitar');if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')&&realGuitarSamples.length){sampledRealGuitar(t,f,.62*note.v)}else if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')&&sampleBuffers.guitar&&sampleBuffers.guitar.length){sampled('guitar',t,f/130.81,.60*note.v)}else if((rock||compositionMode()==='blues'||compositionMode()==='rockBlues')&&trackOn('trackAcoustic')){rockGuitarTone(t,f,Math.min(beat*note.len,1.8,seconds-t),.78,Math.sin(i+bar)*.08)}else if(!(trackOn('trackAcoustic')&&sampled(melodicSample,t,f/130.81,.48))&&!(trackOn('trackAcoustic')&&sampled('guitar',t,f/130.81,.48)))tone(f,t,Math.min(beat*note.len,2.0,seconds-t),'sine',(heavy||dance?.075:.068)*int*note.v,Math.sin(i+bar)*.07,heavy?820:(folk?1500:1250),0,true,true)}
   }
  }
  // Fade in/out avoids clicks at file boundaries.
